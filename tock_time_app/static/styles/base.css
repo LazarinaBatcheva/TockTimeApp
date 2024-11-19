@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Permanent+Marker&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    font: 14px/1 'Itim', sans-serif;
+    color: darkslateblue;
+    background-color: antiquewhite;
+    margin: 2rem;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: darkslateblue;
+}
+
+a:hover {
+    color: chocolate;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90vh;
+}
+
+.my-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: center;
+}
