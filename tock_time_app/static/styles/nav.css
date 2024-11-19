@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Permanent+Marker&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+
+
+/* nav home */
+.nav-home a {
+    margin: 0 1rem;
+}
+
+.nav-home img,
+.profile-img {
+    border-radius: 50%;
+    width: 12%;
+    height: auto;
+}
+
+
+/* nav header */
+header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.my-logo a {
+    display: flex;
+    align-items: center;
+}
+
+.my-logo-img {
+    width: auto;
+    height: 2.2rem;
+    border-radius: 50%;
+}
+
+.nav-header {
+    padding-top: 0.5rem;
+}
+
+.nav-header a {
+    color: darkslateblue;
+    padding: 0 1rem;
+    font-size: 1rem;
+}
+
+.profile-img {
+    text-align: start;
+    width: 40%;
+    height: auto;
+    object-fit: cover;
+}
+
+.dropbtn {
+    background-color: #DCC6B2;
+    color: darkslateblue;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Itim', sans-serif;
+    border: 1px solid darkslateblue;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.dropbtn div {
+    text-align: center;
+    padding: 0.2rem;
+}
+
+#user-img {
+    padding-right: 0;
+}
+
+#user-name {
+    padding-left: 0;
+}
+
+#user-caret-down {
+    padding-left: 1rem;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 25%;
+}
+
+.dropdown-content {
+    background-color: #DCC6B2;
+    display: none;
+    position: absolute;
+    right: 0;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 0.8rem 1rem;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.dropdown-content a:hover {
+    background-color: #CBB39E;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+
