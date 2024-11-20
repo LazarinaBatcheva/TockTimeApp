@@ -4,8 +4,12 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 14px;
+}
+
 body {
-    font: 14px/1 'Itim', sans-serif;
+    font: 1rem/1 'Itim', sans-serif;
     color: darkslateblue;
     background-color: antiquewhite;
     margin: 2rem;

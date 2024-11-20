@@ -7,11 +7,37 @@
     </a>
 </div>
 <div class="nav-header">
-    <a href="#">Profile</a>
-    <a href="#">Add New Task</a>
-    <a href="#">Add Team</a>
-    <a href="#">TaskBoard</a>
-    <a href="#">Home</a>
-    <a href="#">Register</a>
-    <a href="#">LogIn</a>
-</div>
+    {% if request.user.is_authenticated %}
+        <div class="dropdown" style="float: right">
+        <button class="dropbtn">
+            <div id="user-img">
+
+                {# If user has profile image then show it else show default image #}
+                {% if request.user.profile.profile_image %}
+                    {{ request.user.profile.profile_image.url }}
+                {% else %}
+                    <img class="profile-img" src="{% static 'images/user.png' %}" alt="">
+                {% endif %}
+
+            </div>
+            <div id="user-name">{{ request.user.username }}</div>
+            <div id="user-caret-down"><i class="fa fa-caret-down"></i></div>
+        </button>
+
+        <div class="dropdown-content">
+            <a href="#">Profile</a>
+            <a href="#">Add New Task</a>
+            <a href="#">Add Team</a>
+            <a href="#">TaskBoard</a>
+            <a href="{% url 'home' %}">Home</a>
+
+            <form class="form" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-logout" type="submit">Logout</button>
+            </form>
+        </div>
+    {% else %}
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'login' %}">LogIn</a>
+    {% endif %}
+    </div>

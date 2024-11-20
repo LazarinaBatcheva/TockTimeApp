@@ -3,12 +3,16 @@
 
 {% block content %}
     <div class="home-page">
-        <h1>Welcome to TockTime</h1>
-        <p>
-            A home for your personal and team’s tasks!
-        </p>
-        <div class="nav-home">
-            {% include 'common/nav-home.html' %}
-        </div>
+        {% if request.user.is_authenticated %}
+            {# TODO #}
+        {% else %}
+            <h1>Welcome to TockTime</h1>
+            <p>
+                A home for your personal and team’s tasks!
+            </p>
+            <div class="nav-home">
+                {% include 'common/nav-home-page.html' %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

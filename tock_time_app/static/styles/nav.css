@@ -50,6 +50,9 @@ header {
 }
 
 .dropbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #DCC6B2;
     color: darkslateblue;
     font-size: 1rem;
@@ -57,8 +60,6 @@ header {
     font-family: 'Itim', sans-serif;
     border: 1px solid darkslateblue;
     border-radius: 10px;
-    display: flex;
-    justify-content: center;
 }
 
 .dropbtn div {
