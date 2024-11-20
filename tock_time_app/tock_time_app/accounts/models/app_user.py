@@ -5,6 +5,10 @@ from tock_time_app.accounts.managers import AppUserManager
 
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
+    class Meta:
+        verbose_name = 'User account'
+        verbose_name_plural = 'User accounts'
+
     username = models.CharField(
         max_length=100,
         unique=True,
