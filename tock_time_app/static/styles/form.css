@@ -21,7 +21,7 @@ h2 {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     margin-top: 0.5rem;
 }
 
@@ -53,13 +53,6 @@ h2 {
     text-align: center;
 }
 
-/* logout */
-.btn-logout {
-    margin: 0;
-    background-color: #EEDFCC;
-    width: 50%;
-}
-
 /* errors messages */
 .errorlist li ,
 .alert-error {
@@ -77,4 +70,13 @@ p label::before {
     content: "*";
     color: red;
     margin-right: 3px;
+}
+
+/* profile edit form */
+.edit-form {
+    align-items: center;
+}
+
+.edit-form p label::before {
+    content: none;
 }

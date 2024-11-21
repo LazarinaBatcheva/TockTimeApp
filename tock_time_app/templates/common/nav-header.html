@@ -13,8 +13,8 @@
             <div id="user-img">
 
                 {# If user has profile image then show it else show default image #}
-                {% if request.user.profile.profile_image %}
-                    {{ request.user.profile.profile_image.url }}
+                {% if user.profile.profile_picture %}
+                    <img class="profile-img" src="{{ user.profile.profile_picture.url }}" alt="">
                 {% else %}
                     <img class="profile-img" src="{% static 'images/user.png' %}" alt="">
                 {% endif %}
@@ -25,10 +25,9 @@
         </button>
 
         <div class="dropdown-content">
-            <a href="#">Profile</a>
-            <a href="#">Add New Task</a>
-            <a href="#">Add Team</a>
-            <a href="#">TaskBoard</a>
+            <a href="{% url 'profile-details' user.pk %}">Profile</a>
+            <a href="#">Personal Tasks</a>
+            <a href="#">Teams</a>
             <a href="{% url 'home' %}">Home</a>
 
             <form class="form" method="post" action="{% url 'logout' %}">

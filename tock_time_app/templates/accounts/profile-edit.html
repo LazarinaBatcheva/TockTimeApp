@@ -1,0 +1,20 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="profile">
+        <div class="details">
+            <h2>Edit Profile:</h2>
+            <p class="profile-name"><i>{{ profile.user.username }}</i></p>
+            <form class="form edit-form" method="post" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="profile-btns">
+                    <a class="btn dropbtn" href="{% url 'profile-details' request.user.pk %}">Back</a>
+                    <button class="btn" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

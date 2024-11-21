@@ -4,7 +4,24 @@
 {% block content %}
     <div class="home-page">
         {% if request.user.is_authenticated %}
-            {# TODO #}
+            <div class="home-user">
+                <h2>Welcome, <i>{{ user.username }}</i>!</h2>
+                <section class="tasks-home">
+                    <div class="tasks private">
+                        <a href="#">
+                            <h4>Personal</h4>
+                            <p>There are <strong>{{ user.assigned_tasks.count }}</strong> tasks to do</p>
+                        </a>
+                    </div>
+                    <div class="tasks team">
+                        <a href="#">
+                            <h4>Teams</h4>
+                            <p>You are included in <strong>{{ user.teams.count }}</strong> teams</p>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
         {% else %}
             <h1>Welcome to TockTime</h1>
             <p>
