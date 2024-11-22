@@ -60,6 +60,7 @@ header {
     font-family: 'Itim', sans-serif;
     border: 1px solid darkslateblue;
     border-radius: 10px;
+    padding: 0.3rem;
 }
 
 .dropbtn div {
@@ -76,7 +77,7 @@ header {
 }
 
 #user-caret-down {
-    padding: 0 2rem;
+    padding: 0 1rem;
 }
 
 .dropdown {

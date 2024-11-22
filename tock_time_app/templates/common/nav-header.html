@@ -11,12 +11,11 @@
         <div class="dropdown" style="float: right">
         <button class="dropbtn">
             <div id="user-img">
-
                 {# If user has profile image then show it else show default image #}
                 {% if user.profile.profile_picture %}
-                    <img class="profile-img" src="{{ user.profile.profile_picture.url }}" alt="">
+                    <img class="profile-img" src="{{ user.profile.profile_picture.url }}" alt="{{ user.username }}.img">
                 {% else %}
-                    <img class="profile-img" src="{% static 'images/user.png' %}" alt="">
+                    <img class="profile-img" src="{% static 'images/user.png' %}" alt="{{ user.username }}.img">
                 {% endif %}
 
             </div>

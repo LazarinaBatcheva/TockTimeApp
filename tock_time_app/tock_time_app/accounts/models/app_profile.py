@@ -1,10 +1,13 @@
 from cloudinary.models import CloudinaryField
+from django.contrib.auth import get_user_model
 from django.db import models
+
+UserModel = get_user_model()
 
 
 class Profile(models.Model):
     user = models.OneToOneField(
-        to='accounts.AppUser',
+        to=UserModel,
         on_delete=models.CASCADE,
         related_name='profile',
     )

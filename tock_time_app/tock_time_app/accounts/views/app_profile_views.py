@@ -1,8 +1,8 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, DeleteView, TemplateView
 from tock_time_app.accounts.forms import ProfileEditForm
 from tock_time_app.accounts.models import Profile
 
@@ -23,6 +23,21 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             'profile-details',
             kwargs={'pk': self.object.pk}
         )
+
+
+class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Profile
+    template_name = 'accounts/profile-delete.html'
+    success_url = reverse_lazy('profile-deleted-page')
+
+    def test_func(self):
+        profile = self.get_object()
+
+        return self.request.user == profile.user
+
+
+class ProfileDeletedPageView(TemplateView):
+    template_name = 'accounts/profile-deleted-page.html'
 
 
 class ProfileDetailsView(LoginRequiredMixin, DetailView):

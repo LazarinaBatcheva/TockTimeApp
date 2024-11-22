@@ -29,7 +29,7 @@
 
             <div class="profile-btns">
                 <a class="btn dropbtn" href='{% url 'profile-edit' request.user.pk %}'>Edit</a>
-                <a class="btn dropbtn" href='#'>Delete</a>
+                <a class="btn dropbtn" href='{% url 'profile-delete' request.user.pk %}'>Delete</a>
             </div>
         </div>
     </div>
