@@ -8,6 +8,8 @@ UserModel = get_user_model()
 
 class AppUserCreationForm(PlaceholderMixin, NoHelpTextMixin, UserCreationForm):
     placeholder_fields = {
+        'username': 'ex. johndoe123',
+        'email': 'ex. johndoe@mail.com',
         'password1': 'Enter password',
         'password2': 'Confirm password',
     }
@@ -17,10 +19,6 @@ class AppUserCreationForm(PlaceholderMixin, NoHelpTextMixin, UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = UserModel
         fields = ['username', 'email', ]
-        widgets = {
-            'username': forms.TextInput(attrs={'placeholder': 'ex. johndoe123'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'ex. johndoe@mail.com'}),
-        }
 
 
 class AppUserChangeForm(UserChangeForm):

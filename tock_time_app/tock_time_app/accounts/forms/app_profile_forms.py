@@ -9,8 +9,4 @@ class ProfileBaseForm(forms.ModelForm):
 
 
 class ProfileEditForm(ProfileBaseForm):
-    class Meta(ProfileBaseForm.Meta):
-        exclude = ['user', ]
-        widgets = {
-            'profile_picture': forms.FileInput(),
-        }
+    pass
