@@ -25,7 +25,7 @@ class FieldHandlerMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for method_name in ['make_fields_readonly', 'make_fields_disabled', 'remove_help_text']:
+        for method_name in ['remove_help_text', 'set_placeholders']:
             method = getattr(self, method_name, None)
             if callable(method):
                 method()
@@ -33,19 +33,21 @@ class FieldHandlerMixin:
     def set_field_attribute(self, field_names, attribute, value):
         for field_name in field_names:
             if field_name in self.fields:
-                if attribute == 'readonly':
-                    self.fields[field_name].widget.attrs['readonly'] = value
-                elif attribute == 'disabled':
-                    self.fields[field_name].disabled = value
-                elif attribute == 'help_text':
-                    self.fields[field_name].help_text = None if value is None else value
+                setattr(self.fields[field_name], attribute, value)
+
+    def update_widget_attrs(self, field_names, attribute, value):
+        for field_name in field_names:
+            if field_name in self.fields:
+                self.fields[field_name].widget.attrs.update({attribute: value})
 
 
-class DisabledFieldMixin(FieldHandlerMixin):
-    disabled_field = []
+class PlaceholderMixin(FieldHandlerMixin):
+    placeholder_fields = {}
 
-    def make_fields_disabled(self):
-        self.set_field_attribute(self.disabled_field, 'disabled', True)
+    def set_placeholders(self):
+        for field_name, placeholder_text in self.placeholder_fields.items():
+            if field_name in self.fields:
+                self.fields[field_name].widget.attrs.update({'placeholder': placeholder_text})
 
 
 class NoHelpTextMixin(FieldHandlerMixin):
@@ -53,3 +55,6 @@ class NoHelpTextMixin(FieldHandlerMixin):
 
     def remove_help_text(self):
         self.set_field_attribute(self.help_text_fields, 'help_text', None)
+
+
+
