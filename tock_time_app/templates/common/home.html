@@ -5,12 +5,12 @@
     <div class="home-page">
         {% if request.user.is_authenticated %}
             <div class="home-user">
-                <h2>Welcome, <i>{{ user.username }}</i>!</h2>
+                <h2>Welcome, <i>{{ user.username }}</i> !</h2>
                 <section class="tasks-home">
                     <div class="tasks private">
-                        <a href="#">
+                        <a href="{% url 'taskboard' %}">
                             <h4>Personal</h4>
-                            <p>There are <strong>{{ user.assigned_tasks.count }}</strong> tasks to do</p>
+                            <p>There are <strong>{{ user.created_tasks.count }}</strong> tasks to do</p>
                         </a>
                     </div>
                     <div class="tasks team">
@@ -23,7 +23,7 @@
             </div>
 
         {% else %}
-            <h1>Welcome to TockTime</h1>
+            <h1>Welcome to TockTime !</h1>
             <p>
                 A home for your personal and team’s tasks!
             </p>

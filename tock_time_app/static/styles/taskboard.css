@@ -1,0 +1,40 @@
+/* create task */
+.create-task-btn {
+    margin-bottom: 1rem;
+}
+
+/* taskboard */
+.taskboard table {
+    margin: 1.5rem auto;
+    border-spacing: 0.5rem;
+}
+
+.taskboard th, .taskboard td {
+    text-align: center;
+    padding: 0.2rem;
+}
+
+.tasks-list:hover {
+    background-color: #DCC6B2;
+}
+
+.priority.HIGH {
+    color: red;
+}
+
+.priority.MEDIUM {
+    color: orange;
+}
+
+.priority.LOW {
+    color: green;
+}
+
+.task-btn {
+    margin: 0.5rem;
+    padding: 0.05rem 0.4rem;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    border: 2px solid darkslateblue;
+}

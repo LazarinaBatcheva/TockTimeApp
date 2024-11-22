@@ -1,26 +1,3 @@
-from django.db import models
-
-
-class DescriptionMixin(models.Model):
-    description = models.TextField(
-        null=True,
-        blank=True,
-    )
-
-    class Meta:
-        abstract = True
-
-
-class CreatedAtMixin(models.Model):
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        blank=True,
-    )
-
-    class Meta:
-        abstract = True
-
-
 class FieldHandlerMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -55,6 +32,3 @@ class NoHelpTextMixin(FieldHandlerMixin):
 
     def remove_help_text(self):
         self.set_field_attribute(self.help_text_fields, 'help_text', None)
-
-
-

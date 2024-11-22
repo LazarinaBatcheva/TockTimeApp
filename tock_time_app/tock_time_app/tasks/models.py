@@ -28,6 +28,13 @@ class Task(DescriptionMixin, CreatedAtMixin, models.Model):
         default=TaskPriorityChoices.LOW,
     )
 
+    created_by = models.ForeignKey(
+        to=UserModel,
+        on_delete=models.CASCADE,
+        related_name='created_tasks',
+        help_text='The user who created this task.',
+    )
+
     assigned_to = models.ManyToManyField(
         to=UserModel,
         related_name='assigned_tasks',
@@ -42,6 +49,11 @@ class Task(DescriptionMixin, CreatedAtMixin, models.Model):
         blank=True,
         help_text='If this task is for a team, select the team here.',
     )
+
+    class Meta:
+        permissions = {
+            ('assign_task', 'Can assign task to user'),
+        }
 
     def __str__(self):
         return self.title

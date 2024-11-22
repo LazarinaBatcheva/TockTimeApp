@@ -1,0 +1,45 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="form edit-form">
+        {% if object_list %}
+            <h2>Your Tasks:</h2>
+        {% else %}
+            <div>
+                <h1>You have no tasks yet!</h1>
+                <div class="profile-btns">
+                    <p>But you can create your First one</p>
+                    <a class="btn dropbtn create-task-btn" href="#">Here</a>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if object_list %}
+            <div class="taskboard">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Due Time</th>
+                        <th>Priority</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in object_list %}
+                        <tr class="tasks-list">
+                            <td>{{ task.title }}</td>
+                            <td>{{ task.deadline.date }}</td>
+                            <td>{{ task.deadline.time }}</td>
+                            <td class="priority {{ task.priority }}">{{ task.get_priority_display }}</td>
+                            <td>
+                                <a class="btn task-btn" href="#">View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
