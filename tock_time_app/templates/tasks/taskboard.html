@@ -28,7 +28,7 @@
                     <tbody>
                     {% for task in object_list %}
                         <tr class="tasks-list">
-                            <td>{{ task.title }}</td>
+                            <td>{{ task.title|truncatechars:15 }}</td>
                             <td>{{ task.deadline.date }}</td>
                             <td>{{ task.deadline.time }}</td>
                             <td class="priority {{ task.priority }}">{{ task.get_priority_display }}</td>

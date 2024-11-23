@@ -51,9 +51,13 @@ class Task(DescriptionMixin, CreatedAtMixin, models.Model):
     )
 
     class Meta:
-        permissions = {
+        permissions = [
             ('assign_task', 'Can assign task to user'),
-        }
+        ]
+        indexes = [
+            models.Index(fields=['deadline', ]),
+        ]
+        ordering = ['deadline',]
 
     def __str__(self):
         return self.title
