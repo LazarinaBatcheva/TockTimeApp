@@ -1,0 +1,32 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="profile">
+        <div class="details">
+            <h2>Delete Task:</h2>
+            <p class="profile-name"><i>{{ task.title }}</i></p>
+        
+            <form class="form edit-task" method="post">
+
+                {% csrf_token %}
+            
+                <p><strong>Priority:</strong> {{ object.priority }}</p>
+                <p><strong>Deadline:</strong> {{ object.deadline }}</p>
+                {% if object.description %}
+                    <p><strong>Description:</strong> {{ object.description }}</p>
+                {% endif %}
+                {% if object.note %}
+                    <p><strong>Note:</strong> {{ object.note }}</p>
+                {% endif %}
+                <p>Are you sure you want to delete this task?</p>
+
+                <div class="profile-btns">
+                    <a class="btn dropbtn" href="{% url 'task-details' user.username task.pk %}">Back</a>
+                    <button class="btn" type="submit">Delete</button>
+                </div>
+            
+            </form>
+        
+        </div>
+    </div>
+{% endblock %}

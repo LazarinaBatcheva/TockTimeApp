@@ -78,11 +78,15 @@ p label::before {
     align-items: center;
 }
 
-
 .edit-form p label::before {
     content: none;
 }
 
 .required-indicator {
     color: red;
+}
+
+/* task edit form */
+.edit-task p label::before {
+    content: none;
 }

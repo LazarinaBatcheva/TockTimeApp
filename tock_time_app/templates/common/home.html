@@ -8,7 +8,7 @@
                 <h2>Welcome, <i>{{ user.username }}</i> !</h2>
                 <section class="tasks-home">
                     <div class="tasks private">
-                        <a href="{% url 'taskboard' %}">
+                        <a href="{% url 'taskboard' user.username %}">
                             <h4>Personal</h4>
                             <p>There are <strong>{{ user.created_tasks.count }}</strong> tasks to do</p>
                         </a>

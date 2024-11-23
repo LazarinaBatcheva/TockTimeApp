@@ -1,0 +1,20 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="profile">
+        <div class="details">
+            <h2>Edit Task:</h2>
+            <p class="profile-name"><i>{{ task.title }}</i></p>
+            <form class="form edit-task" method="post">
+
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="profile-btns">
+                    <a class="btn dropbtn" href="{% url 'taskboard' user.username %}">Back</a>
+                    <button class="btn" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,4 @@
 from django import forms
-
 from tock_time_app.common.mixins.form_mixins import MarkRequiredFieldsMixin
 from tock_time_app.tasks.models import Task
 
@@ -7,7 +6,7 @@ from tock_time_app.tasks.models import Task
 class TaskBaseForm(MarkRequiredFieldsMixin, forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'priority', 'deadline', 'description', 'assigned_to', 'team', 'note']
+        fields = ['title', 'priority', 'deadline', 'description', 'note']
         widgets = {
             'deadline': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'description': forms.Textarea(attrs={'rows': 3}),
@@ -17,4 +16,8 @@ class TaskBaseForm(MarkRequiredFieldsMixin, forms.ModelForm):
 
 
 class TaskCreateForm(TaskBaseForm):
+    required_indicator = '<span class="required-indicator">*</span>'
+
+
+class TaskEditForm(TaskBaseForm):
     pass

@@ -2,14 +2,7 @@ from django.utils.safestring import mark_safe
 
 
 class FieldHandlerMixin:
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for method_name in ['remove_help_text', 'set_placeholders', 'mark_required_fields']:
-            method = getattr(self, method_name, None)
-            if callable(method):
-                method()
-
+    """Base mixin providing utility methods for handling form fields"""
     def set_field_attribute(self, field_names, attribute, value):
         for field_name in field_names:
             if field_name in self.fields:
@@ -24,6 +17,10 @@ class FieldHandlerMixin:
 class PlaceholderMixin(FieldHandlerMixin):
     placeholder_fields = {}
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.set_placeholders()
+
     def set_placeholders(self):
         for field_name, placeholder_text in self.placeholder_fields.items():
             if field_name in self.fields:
@@ -33,12 +30,20 @@ class PlaceholderMixin(FieldHandlerMixin):
 class NoHelpTextMixin(FieldHandlerMixin):
     help_text_fields = []
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.remove_help_text()
+
     def remove_help_text(self):
         self.set_field_attribute(self.help_text_fields, 'help_text', None)
 
 
 class MarkRequiredFieldsMixin(FieldHandlerMixin):
-    required_indicator = '<span class="required-indicator">*</span>'
+    required_indicator = ''
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mark_required_fields()
 
     def mark_required_fields(self):
         for field_name, field in self.fields.items():
