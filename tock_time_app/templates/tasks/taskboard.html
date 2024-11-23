@@ -9,7 +9,7 @@
                 <h1>You have no tasks yet!</h1>
                 <div class="profile-btns">
                     <p>But you can create your First one</p>
-                    <a class="btn dropbtn create-task-btn" href="#">Here</a>
+                    <a class="btn dropbtn create-task-btn" href="{% url 'task-create' %}">Here</a>
                 </div>
             </div>
         {% endif %}
@@ -39,6 +39,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                
+                <div class="profile-btns">
+                    <a class="btn dropbtn create-task-btn" href="{% url 'task-create' %}">Create New Task</a>
             </div>
         {% endif %}
     </div>

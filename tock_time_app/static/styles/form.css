@@ -78,10 +78,11 @@ p label::before {
     align-items: center;
 }
 
-.edit-form p {
-    text-align: center;
-}
 
 .edit-form p label::before {
     content: none;
+}
+
+.required-indicator {
+    color: red;
 }

@@ -18,15 +18,15 @@
     background-color: #DCC6B2;
 }
 
-.priority.HIGH {
+.priority.high {
     color: red;
 }
 
-.priority.MEDIUM {
+.priority.medium {
     color: orange;
 }
 
-.priority.LOW {
+.priority.low {
     color: green;
 }
 

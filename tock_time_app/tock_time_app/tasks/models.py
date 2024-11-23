@@ -32,7 +32,6 @@ class Task(DescriptionMixin, CreatedAtMixin, models.Model):
         to=UserModel,
         on_delete=models.CASCADE,
         related_name='created_tasks',
-        help_text='The user who created this task.',
     )
 
     assigned_to = models.ManyToManyField(
