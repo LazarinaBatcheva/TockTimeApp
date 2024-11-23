@@ -6,16 +6,16 @@
         {% if request.user.is_authenticated %}
             <div class="home-user">
                 <h2>Welcome, <i>{{ user.username }}</i> !</h2>
-                <section class="tasks-home">
-                    <div class="tasks private">
+                <section class="tasks-teams-home">
+                    <div class="tasks">
                         <a href="{% url 'taskboard' user.username %}">
-                            <h4>Personal</h4>
+                            <h4>Your Personal Tasks</h4>
                             <p>There are <strong>{{ user.created_tasks.count }}</strong> tasks to do</p>
                         </a>
                     </div>
-                    <div class="tasks team">
-                        <a href="#">
-                            <h4>Teams</h4>
+                    <div class="tasks">
+                        <a href="{% url 'teams-dashboard' user.username %}">
+                            <h4>Your Teams</h4>
                             <p>You are included in <strong>{{ user.teams.count }}</strong> teams</p>
                         </a>
                     </div>

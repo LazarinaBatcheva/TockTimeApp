@@ -26,7 +26,7 @@
         <div class="dropdown-content">
             <a href="{% url 'profile-details' user.pk %}">Profile</a>
             <a href="{% url 'taskboard' user.username %}">Personal Tasks</a>
-            <a href="#">Teams</a>
+            <a href="{% url 'teams-dashboard' user.username %}">Teams</a>
             <a href="{% url 'home' %}">Home</a>
 
             <form class="form" method="post" action="{% url 'logout' %}">

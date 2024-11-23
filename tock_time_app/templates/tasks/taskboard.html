@@ -2,11 +2,12 @@
 
 {% block content %}
     <div class="form edit-form">
+        <h2>Welcome to your Personal Dashboard!</h2>
         {% if object_list %}
-            <h2>Your Tasks:</h2>
+            <h3>Here are your tasks:</h3>
         {% else %}
             <div>
-                <h1>You have no tasks yet!</h1>
+                <h2>You have no tasks yet!</h2>
                 <div class="profile-btns">
                     <p>But you can create your First one</p>
                     <a class="btn dropbtn create-task-btn" href="{% url 'task-create' user.username %}">Here</a>
@@ -41,7 +42,9 @@
                 </table>
 
                 <div class="profile-btns">
-                    <a class="btn dropbtn create-task-btn" href="{% url 'task-create' user.username %}">Create New Task</a>
+                    <a class="btn dropbtn create-task-btn" href="{% url 'task-create' user.username %}">Create New
+                        Task</a>
+                </div>
             </div>
         {% endif %}
     </div>

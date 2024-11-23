@@ -18,7 +18,7 @@
     align-items: center;
 }
 
-.tasks-home {
+.tasks-teams-home {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -32,6 +32,8 @@
     padding: 0.5rem;
     max-width: 40%;
     box-shadow: 0px 5px 16px 0px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    background-color: lightcyan;
 }
 
 .tasks p {
