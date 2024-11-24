@@ -42,3 +42,8 @@ button a:hover {
     font-size: 1.2rem;
     align-self: center;
 }
+
+/* teams details */
+.team-members {
+    display: flex;
+}

@@ -12,7 +12,7 @@
 
 h2, h3 {
     text-align: center;
-    margin-bottom: 0.3rem;
+    padding-bottom: 0.5rem;
 }
 
 .form input,
@@ -27,8 +27,7 @@ h2, h3 {
 }
 
 .form p {
-    margin-bottom: 0.5rem;
-    text-align: start;
+    margin: 0.3rem;
 }
 
 .btn {
@@ -67,12 +66,6 @@ h2, h3 {
     justify-content: center;
 }
 
-p label::before {
-    content: "*";
-    color: red;
-    margin-right: 3px;
-}
-
 /* profile edit form */
 .edit-form {
     align-items: center;
@@ -80,10 +73,6 @@ p label::before {
 
 .edit-form p {
     text-align: center;
-}
-
-.edit-form p label::before {
-    content: none;
 }
 
 .required-indicator {

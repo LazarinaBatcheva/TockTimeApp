@@ -19,7 +19,7 @@
         <section class="tasks-teams-home">
             {% for team in object_list %}
                 <div class="tasks">
-                    <a href="#">
+                    <a href="{% url 'team-details' user.username team.slug %}">
                         <h4>{{ team.name }}</h4>
                         <p>There are {{ team.tasks.count }} tasks</p>
                     </a>

@@ -1,4 +1,5 @@
 {% extends 'common/base.html' %}
+{% load task_personal_filter %}
 {% load static %}
 
 {% block content %}
@@ -10,7 +11,7 @@
                     <div class="tasks">
                         <a href="{% url 'taskboard' user.username %}">
                             <h4>Your Personal Tasks</h4>
-                            <p>There are <strong>{{ user.created_tasks.count }}</strong> tasks to do</p>
+                            <p>There are <strong>{{ request.user|personal_task_count }}</strong> tasks to do</p>
                         </a>
                     </div>
                     <div class="tasks">

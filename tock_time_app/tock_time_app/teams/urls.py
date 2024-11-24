@@ -4,8 +4,12 @@ from tock_time_app.teams import views
 teams_patterns = [
     path('', views.TeamsDashboardView.as_view(), name='teams-dashboard'),
     path('create/', views.TeamCreateView.as_view(), name='team-create'),
+    path('<slug:slug>/', include([
+        path('', views.TeamDetailsView.as_view(), name='team-details'),
+        path('task/create/', views.TeamTaskCreateView.as_view(), name='team-task-create'),
+    ])),
 ]
 
 urlpatterns = [
-    path('<str:username>/teams/', include(teams_patterns))
+    path('<str:username>/team/', include(teams_patterns))
 ]

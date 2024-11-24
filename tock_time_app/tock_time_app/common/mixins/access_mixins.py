@@ -10,6 +10,11 @@ class UserProfileAccessMixin:
 
 class ObjectOwnerAccessMixin:
     """Mixin to ensure the user has access to objects they own."""
+
+    owner_model = None
+
     def test_func(self):
-        obj = get_object_or_404(self.get_queryset(), pk=self.kwargs['pk'])
+        model = self.owner_model or self.get_queryset().model
+        obj = get_object_or_404(model, slug=self.kwargs['slug'])
         return obj.created_by == self.request.user
+

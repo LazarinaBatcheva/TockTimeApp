@@ -1,0 +1,29 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="form">
+        <h2>{{ object.name }}</h2>
+        <p><strong>Created by:</strong> {{ object.created_by }}</p>
+        <div class="team-members">
+            <p><strong>Members:</strong></p>
+            {% for member in object.members.all %}
+                <p>{{ member.username }},</p>
+            {% endfor %}
+        </div>
+
+        <div class="form edit-form">
+            <p><strong>Tasks:</strong></p>
+            {% for task in object.tasks.all %}
+                    <p>
+                        <a href="#">{{ task.title }}</a>
+                    </p>
+            {% empty %}
+                <p>There are no tasks yet!</p>
+            {% endfor %}
+        </div>
+
+    <div class="profile-btns">
+        <a href="{% url 'team-task-create' user.username team.slug %}" class="btn dropbtn">Create Task</a>
+    </div>
+    </div>
+{% endblock %}

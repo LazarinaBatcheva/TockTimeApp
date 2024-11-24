@@ -11,7 +11,10 @@ class TaskboardView(LoginRequiredMixin, ListView):
     template_name = 'tasks/taskboard.html'
 
     def get_queryset(self):
-        return Task.objects.filter(created_by=self.request.user)
+        return Task.objects.filter(
+            created_by=self.request.user,
+            team__isnull=True,
+        )
 
 
 class CreateTaskView(LoginRequiredMixin, CreateView):
@@ -22,6 +25,7 @@ class CreateTaskView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         task = form.save(commit=False)
         task.created_by = self.request.user
+        task.team = None
 
         return super().form_valid(form)
 
