@@ -7,7 +7,7 @@
     font-size: 1rem;
     justify-content: center;
     margin: 0;
-    padding: 0;
+    padding: 1rem;
 }
 
 h2, h3 {
@@ -20,7 +20,7 @@ h2, h3 {
 .form textarea {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid darkslateblue;
     border-radius: 5px;
     font-size: 0.8rem;
     margin-top: 0.5rem;
@@ -33,12 +33,12 @@ h2, h3 {
 .btn {
     font-size: 1rem;
     font-family: 'Itim', sans-serif;
+    border: 1.5px solid darkslateblue;
     border-radius: 10px;
     transition: background-color 0.3s;
-    margin-top: 1rem;
+    margin-top: 0.3rem;
     color: darkslateblue;
     background-color: whitesmoke;
-    max-width: 50%;
     align-self: center;
 }
 
@@ -48,9 +48,12 @@ h2, h3 {
 }
 
 /* login / register */
-.login-register  {
+.login-register, .task {
     align-items: center;
     text-align: center;
+    background-color: hsl(80, 50%, 95%);
+    border: 1px solid darkslateblue;
+    border-radius: 10px;
 }
 
 /* errors messages */
@@ -61,9 +64,15 @@ h2, h3 {
     text-align: center;
 }
 
-.nonfield {
-    display: flex;
-    justify-content: center;
+/*.nonfield {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
+
+p label::before {
+    content: "*";
+    color: red;
+    margin-right: 3px;
 }
 
 /* profile edit form */
@@ -73,6 +82,10 @@ h2, h3 {
 
 .edit-form p {
     text-align: center;
+}
+
+.edit-form p label::before {
+    content: none;
 }
 
 .required-indicator {

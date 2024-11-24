@@ -11,7 +11,8 @@ html {
 body {
     font: 1rem/1 'Itim', sans-serif;
     color: darkslateblue;
-    background-color: antiquewhite;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url('../images/background.png') repeat;
+    background-size: 70px 70px;
     margin: 2rem;
     height: 100%;
 }
@@ -22,7 +23,7 @@ a {
 }
 
 a:hover {
-    color: chocolate;
+    color: darkslateblue;
 }
 
 .container {

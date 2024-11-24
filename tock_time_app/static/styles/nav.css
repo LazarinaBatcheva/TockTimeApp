@@ -63,7 +63,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #DCC6B2;
+    background-color: hsl(80, 50%, 95%);
     color: darkslateblue;
     font-size: 1rem;
     cursor: pointer;
@@ -93,7 +93,7 @@ header {
 }
 
 .dropdown-content {
-    background-color: #DCC6B2;
+    background-color: hsl(80, 50%, 95%);
     display: none;
     position: absolute;
     right: 0;
@@ -110,7 +110,8 @@ header {
 }
 
 .dropdown-content a:hover {
-    background-color: #CBB39E;
+    background-color: darkslateblue;
+    color: white;
 }
 
 .dropdown:hover .dropdown-content {
@@ -119,7 +120,7 @@ header {
 
 /* logout */
 .btn-logout {
-    background-color: #EEDFCC;
+    background-color: whitesmoke;
     width: 50%;
 }
 

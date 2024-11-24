@@ -33,7 +33,15 @@
     max-width: 40%;
     box-shadow: 0px 5px 16px 0px rgba(0, 0, 0, 0.2);
     text-align: center;
-    background-color: lightcyan;
+    background-color: hsl(80, 50%, 95%);
+}
+
+.tasks-hover:hover {
+    background-color: darkslateblue;
+}
+
+.tasks-hover a:hover {
+    color: white;
 }
 
 .tasks p {

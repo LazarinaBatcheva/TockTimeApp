@@ -8,13 +8,13 @@
             <div class="home-user">
                 <h2>Welcome, <i>{{ user.username }}</i> !</h2>
                 <section class="tasks-teams-home">
-                    <div class="tasks">
+                    <div class="tasks tasks-hover">
                         <a href="{% url 'taskboard' user.username %}">
                             <h4>Your Personal Tasks</h4>
                             <p>There are <strong>{{ request.user|personal_task_count }}</strong> tasks to do</p>
                         </a>
                     </div>
-                    <div class="tasks">
+                    <div class="tasks tasks-hover">
                         <a href="{% url 'teams-dashboard' user.username %}">
                             <h4>Your Teams</h4>
                             <p>You are included in <strong>{{ user.teams.count }}</strong> teams</p>

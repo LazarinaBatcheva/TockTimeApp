@@ -10,7 +10,7 @@
 }
 
 .tasks-list:hover {
-    background-color: #DCC6B2;
+    background-color: hsl(80, 50%, 95%);
 }
 
 .priority.high {
