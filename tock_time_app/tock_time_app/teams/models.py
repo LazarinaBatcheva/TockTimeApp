@@ -1,21 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.template.defaultfilters import slugify
-from tock_time_app.common.mixins import DescriptionMixin, CreatedAtMixin
+from tock_time_app.common.mixins import DescriptionMixin, CreatedAtMixin, CreatedByMixin
 
 UserModel = get_user_model()
 
 
-class Team(DescriptionMixin, CreatedAtMixin, models.Model):
+class Team(DescriptionMixin, CreatedAtMixin, CreatedByMixin, models.Model):
     name = models.CharField(
         max_length=100,
         unique=True,
-    )
-
-    created_by = models.ForeignKey(
-        to=UserModel,
-        on_delete=models.CASCADE,
-        related_name='created_teams',
     )
 
     members = models.ManyToManyField(

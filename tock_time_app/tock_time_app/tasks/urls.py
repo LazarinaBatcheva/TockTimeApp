@@ -3,11 +3,11 @@ from tock_time_app.tasks import views
 
 personal_task_patterns = [
     path('', views.TaskboardView.as_view(), name='taskboard'),
-    path('create/', views.CreateTaskView.as_view(), name='task-create'),
+    path('create/', views.PersonalTaskCreateView.as_view(), name='personal-task-create'),
     path('task/<int:pk>/', include([
-        path('', views.TaskDetailsView.as_view(), name='task-details'),
-        path('edit/', views.TaskEditView.as_view(), name='task-edit'),
-        path('delete/', views.TaskDeleteView.as_view(), name='task-delete'),
+        path('', views.PersonalTaskDetailsView.as_view(), name='personal-task-details'),
+        path('edit/', views.PersonalTaskEditView.as_view(), name='personal-task-edit'),
+        path('delete/', views.PersonalTaskDeleteView.as_view(), name='personal-task-delete'),
     ])),
 ]
 

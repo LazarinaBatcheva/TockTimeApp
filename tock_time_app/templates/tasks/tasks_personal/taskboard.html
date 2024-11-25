@@ -10,7 +10,10 @@
                 <h2>You have no tasks yet!</h2>
                 <div class="profile-btns">
                     <p>But you can create your First one</p>
-                    <a class="btn dropbtn create-task-btn" href="{% url 'task-create' user.username %}">Here</a>
+                    <a class="btn dropbtn create-task-btn" 
+                       href="{% url 'personal-task-create' user.username %}">
+                        Here
+                    </a>
                 </div>
             </div>
         {% endif %}
@@ -34,7 +37,10 @@
                             <td>{{ task.deadline.time }}</td>
                             <td class="priority {{ task.priority }}">{{ task.get_priority_display }}</td>
                             <td>
-                                <a class="btn task-btn" href="{% url 'task-details' user.username task.pk %}">View</a>
+                                <a class="btn task-btn" 
+                                   href="{% url 'personal-task-details' user.username task.pk %}">
+                                    View
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -42,8 +48,10 @@
                 </table>
 
                 <div class="profile-btns">
-                    <a class="btn dropbtn create-task-btn" href="{% url 'task-create' user.username %}">Create New
-                        Task</a>
+                    <a class="btn dropbtn create-task-btn" 
+                       href="{% url 'personal-task-create' user.username %}">
+                        Create New Task
+                    </a>
                 </div>
             </div>
         {% endif %}
