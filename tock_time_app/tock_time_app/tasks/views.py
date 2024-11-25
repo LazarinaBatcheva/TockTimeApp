@@ -14,6 +14,7 @@ class TaskboardView(LoginRequiredMixin, ListView):
         return Task.objects.filter(
             created_by=self.request.user,
             team__isnull=True,
+            is_completed=False,
         )
 
 

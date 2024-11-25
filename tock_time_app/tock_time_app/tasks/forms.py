@@ -19,4 +19,10 @@ class TaskCreateForm(MarkRequiredFieldsMixin, TaskBaseForm):
 
 
 class TaskEditForm(TaskBaseForm):
-    pass
+    class Meta(TaskBaseForm.Meta):
+        fields = ['title', 'priority', 'deadline', 'description', 'note', 'is_completed']
+        widgets = {
+            'deadline': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'description': forms.Textarea(attrs={'rows': 3}),
+            'note': forms.Textarea(attrs={'rows': 3}),
+        }

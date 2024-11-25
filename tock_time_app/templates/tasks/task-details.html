@@ -24,6 +24,9 @@
                     <a href="{% url 'task-edit' user.username task.pk %}" class="btn dropbtn">Edit</a>
                     <a href="{% url 'task-delete' user.username task.pk %}" class="btn dropbtn">Delete</a>
                 </div>
+                <div class="profile-btns">
+                    <a href="{% url 'taskboard' user.username %}" class="btn dropbtn">Back</a>
+                </div>
             </div>
         </div>
     </div>
