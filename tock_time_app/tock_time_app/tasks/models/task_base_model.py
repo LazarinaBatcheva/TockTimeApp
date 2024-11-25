@@ -1,8 +1,8 @@
 from django.db import models
-from tock_time_app.common.mixins import DescriptionMixin, CreatedAtMixin, CreatedByMixin
+from tock_time_app.common.mixins import DescriptionMixin, CreatedAtMixin
 
 
-class TaskBaseModel(DescriptionMixin, CreatedAtMixin, CreatedByMixin, models.Model):
+class TaskBaseModel(DescriptionMixin, CreatedAtMixin, models.Model):
     title = models.CharField(
         max_length=100,
     )

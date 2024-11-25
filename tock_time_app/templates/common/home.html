@@ -10,7 +10,7 @@
                     <div class="tasks tasks-hover">
                         <a href="{% url 'taskboard' user.username %}">
                             <h4>Your Personal Tasks</h4>
-                            <p>There are <strong>{{ user.created_personal_tasks.uncompleted_tasks.count }}</strong> tasks to do</p>
+                            <p>There are <strong>{{ uncompleted_tasks.count }}</strong> tasks to do</p>
                         </a>
                     </div>
                     <div class="tasks tasks-hover">
