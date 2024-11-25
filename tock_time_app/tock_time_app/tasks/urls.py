@@ -11,6 +11,13 @@ personal_task_patterns = [
     ])),
 ]
 
+team_task_patterns = [
+    path('task/create/', views.TeamTaskCreateView.as_view(), name='team-task-create'),
+]
+
 urlpatterns = [
-    path('<str:username>/personal/', include(personal_task_patterns)),
+    path('<str:username>/', include([
+        path('personal/', include(personal_task_patterns)),
+        path('team/<slug:slug>/', include(team_task_patterns)),
+    ])),
 ]
