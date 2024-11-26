@@ -1,3 +1,8 @@
+"""
+Profile model for extending user functionality.
+The Profile model is linked to the AppUser model and adds fields for first name, last name, and profile picture.
+"""
+
 from cloudinary.models import CloudinaryField
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -6,6 +11,8 @@ UserModel = get_user_model()
 
 
 class Profile(models.Model):
+    """ A model representing additional user profile details. """
+
     user = models.OneToOneField(
         to=UserModel,
         on_delete=models.CASCADE,

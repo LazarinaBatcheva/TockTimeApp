@@ -1,11 +1,24 @@
+"""
+Custom manager for the AppUser model.
+
+This module defines methods for creating users and superusers,
+customizing the user creation process in Django.
+"""
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
 
 
 class AppUserManager(BaseUserManager):
+    """ Custom manager for the AppUser model. """
+
     use_in_migrations = True
 
     def _create_user(self, username, email, password, **extra_fields):
+        """
+        Create and save a user with the given username, email, and password.
+        """
+
         if not username:
             raise ValueError("The given username must be set")
 

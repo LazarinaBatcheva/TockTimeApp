@@ -1,3 +1,9 @@
+"""
+Custom user model for the accounts app.
+The AppUser model extends AbstractBaseUser and PermissionsMixin
+to provide flexibility for authentication and user management.
+"""
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
@@ -5,6 +11,8 @@ from tock_time_app.accounts.managers import AppUserManager
 
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
+    """ A custom user model with username, email, and account status fields. """
+
     class Meta:
         verbose_name = 'User account'
         verbose_name_plural = 'User accounts'
