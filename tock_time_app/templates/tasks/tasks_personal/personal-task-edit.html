@@ -2,8 +2,8 @@
 
 {% block content %}
     <div class="task">
-        <div class="details">
-            <h2>Edit Task:</h2>
+        <div class="container-fluid">
+            <h3>Edit Task:</h3>
             <p class="profile-name"><i>{{ task.title }}</i></p>
             <form class="form edit-task" method="post">
 
@@ -11,8 +11,11 @@
                 {{ form.as_p }}
 
                 <div class="profile-btns">
-                    <a class="btn dropbtn" href="{% url 'taskboard' user.username %}">Back</a>
-                    <button class="btn" type="submit">Update</button>
+                    <a class="btn btn-secondary" 
+                       href="{% url 'personal-task-details' user.username object.pk %}">
+                        Back
+                    </a>
+                    <button class="btn btn-secondary" type="submit">Update</button>
                 </div>
             </form>
         </div>

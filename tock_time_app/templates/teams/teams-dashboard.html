@@ -1,34 +1,45 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    <div class="form">
-        <h2>Welcome to your Teams Dashboard</h2>
+    <div class="form form-view m-auto gap-3">
+        <h3>Welcome to your Teams Dashboard</h3>
 
-        {% if object_list %}
-            <h3>Here are your teams:</h3>
-        {% else %}
-            <div>
-                <h2>There is no team yet!</h2>
-                <div class="profile-btns">
-                    <p>But you can create one</p>
-                    <a class="btn dropbtn create-task-btn" href="{% url 'team-create' user.username %}">Here</a>
+        <div class="form task teams-view">
+            {% if object_list %}
+                <h4>Here are your teams:</h4>
+            {% else %}
+                <div>
+                    <h3>There is no team yet!</h3>
+                    <div class="profile-btns">
+                        <p>But you can create one</p>
+                        <a class="btn dropbtn create-task-btn" 
+                           href="{% url 'team-create' user.username %}">
+                            Here</a>
+                    </div>
                 </div>
+            {% endif %}
+
+            <section class="container-fluid d-flex justify-content-center gap-3 my-4 flex-wrap">
+                {% for team in object_list %}
+                    <div class="card custom-card card-link-hover">
+                        <a href="{% url 'team-details' user.username team.slug %}">
+                            <h5>{{ team.name }}</h5>
+                            <p>There are <strong>{{ team.tasks.count }}</strong> tasks</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </section>
+
+            <div class="text-center mt-5 mb-3">
+                {% include 'common/paginator.html' %}
             </div>
-        {% endif %}
 
-        <section class="tasks-teams-home">
-            {% for team in object_list %}
-                <div class="tasks tasks-hover">
-                    <a href="{% url 'team-details' user.username team.slug %}">
-                        <h4>{{ team.name }}</h4>
-                        <p>There are {{ team.tasks.count }} tasks</p>
-                    </a>
-                </div>
-            {% endfor %}
-        </section>
-
-        <div class="profile-btns">
-            <a class="btn dropbtn" href="{% url 'team-create' user.username %}">Create New Team</a>
+            <div class="profile-btns">
+                <a class="btn btn-secondary" 
+                   href="{% url 'team-create' user.username %}">
+                    Create New Team
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}

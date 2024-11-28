@@ -1,40 +1,13 @@
-/* taskboard */
-.taskboard table {
-    margin: 0;
-    border-spacing: 1.5rem;
+/* personal taskboard */
+.prnl-taskbrd {
+    width: 60%;
 }
 
-.taskboard th, .taskboard td {
+td {
     text-align: center;
-    padding: 0.2rem;
 }
 
-.tasks-list:hover {
-    background-color: hsl(80, 50%, 95%);
-}
-
-.priority.high {
-    color: red;
-}
-
-.priority.medium {
-    color: orange;
-}
-
-.priority.low {
-    color: green;
-}
-
-.task-btn {
-    margin: 0.5rem;
-    padding: 0.05rem 0.4rem;
-    background-color: whitesmoke;
-    border-radius: 10px;
-    transition: background-color 0.3s;
-    border: 2px solid darkslateblue;
-}
-
-/* create task */
-.create-task-btn {
-    margin-bottom: 1rem;
+/* team taskboard */
+.teams-view {
+    width: 100%;
 }

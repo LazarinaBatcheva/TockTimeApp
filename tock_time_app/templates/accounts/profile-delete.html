@@ -1,18 +1,22 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    <div class="profile">
-        <div class="details task">
-            <h2>Hey, {{ user.username }}!</h2>
+    <div class="container-fluid m-auto">
+        <div class="card task">
+            <h2 class="mb-5">Hey, {{ user.username }}!</h2>
             <p>Are you sure you want to <strong>Delete</strong> your profile?</p>
 
-            <form class="form edit-form" method="post">
+            <form class="form" method="post">
 
                 {% csrf_token %}
 
                 <div class="profile-btns">
-                    <a class="btn dropbtn" href="{% url 'profile-details' request.user.pk %}">Back</a>
-                    <button class="btn" type="submit">Delete</button>
+                    <a class="btn btn-secondary" 
+                       href="{% url 'profile-details' request.user.pk %}">
+                        Back
+                    </a>
+                    
+                    <button class="btn btn-secondary" type="submit">Delete</button>
                 </div>
 
             </form>

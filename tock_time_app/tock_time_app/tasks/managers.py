@@ -6,7 +6,7 @@ class PersonalTaskManager(models.Manager):
         """Returns all tasks for a specific user."""
         return self.filter(created_by=user)
 
-    def uncompleted_for_user(self, user):
-        """Returns the uncompleted tasks for a specific user."""
-        return self.filter(created_by=user, is_completed=False)
+    # def uncompleted_for_user(self, user):
+    #     """Returns the uncompleted tasks for a specific user."""
+    #     return self.filter(created_by=user, is_completed=False)
 

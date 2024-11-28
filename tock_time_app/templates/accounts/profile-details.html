@@ -2,36 +2,45 @@
 {% load static %}
 
 {% block content %}
-    <div class="profile">
-        <div class="details task">
-            <h2>Profile Details:</h2>
-            <p class="profile-name"><strong><i>{{ user.username }}</i></strong></p>
-            <div class="profile-img">
+    <div class="card text-center container-fluid m-auto" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-4">Profile Details:</h5>
+            <p class="card-text"><strong><i>{{ user.username }}</i></strong></p>
+
+            <div class="profile-img mb-4">
                 {% if user.profile.profile_picture %}
                     <img src="{{ user.profile.profile_picture.url }}" alt="{{ user.username }}.img">
                 {% else %}
-                    <img class="profile-img" src="{% static 'images/user.png' %}" alt="{{ user.username }}.img">
+                    <img class="profile-img" 
+                         src="{% static 'images/user.png' %}" 
+                         alt="{{ user.username }}.img">
                 {% endif %}
             </div>
 
-            <div class="profile-info">
-
+            <div class="profile-info mb-4">
                 {% if user.profile.get_name %}
-                    <p>{{ user.profile.get_name }}</p>
+                    <p class="mb-3">{{ user.profile.get_name }}</p>
                 {% endif %}
 
                 {% if user.email %}
-                    <p>{{ user.email }}</p>
+                    <p class="mb-3">{{ user.email }}</p>
                 {% endif %}
 
-                <p>Joined on {{ user.date_joined }}</p>
+                <p class="mb-3">Joined on {{ user.date_joined }}</p>
             </div>
 
             <div class="profile-btns">
-                <a class="btn dropbtn" href='{% url 'profile-edit' request.user.pk %}'>Edit</a>
-                <a class="btn dropbtn" href='{% url 'profile-delete' request.user.pk %}'>Delete</a>
+                <a class="btn btn-secondary" 
+                   href='{% url 'profile-edit' request.user.pk %}'>
+                    Edit
+                </a>
+                <a class="btn btn-secondary" 
+                   href='{% url 'profile-delete' request.user.pk %}'>
+                    Delete
+                </a>
             </div>
+
+            <a class="btn btn-secondary custom-btn" href="{% url 'home' %}">Back To Home</a>
         </div>
     </div>
-
 {% endblock %}

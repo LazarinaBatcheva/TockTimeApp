@@ -2,33 +2,46 @@
 {% load static %}
 
 {% block content %}
-    <div class="home-page">
+    <div class="container-fluid d-flex flex-column m-auto gap-3 text-center">
         {% if request.user.is_authenticated %}
-            <div class="home-user">
-                <h2>Welcome, <i>{{ user.username }}</i> !</h2>
-                <section class="tasks-teams-home">
-                    <div class="tasks tasks-hover">
-                        <a href="{% url 'taskboard' user.username %}">
-                            <h4>Your Personal Tasks</h4>
-                            <p>There are <strong>{{ uncompleted_tasks.count }}</strong> tasks to do</p>
-                        </a>
+            <h3>Welcome, <i>{{ user.username }}</i> !</h3>
+            <div class="form form-view d-flex">
+                <div class="row">
+                    <div class="col-sm-6 mb-sm-0">
+                        <div class="card custom-card card-link-hover">
+                            <div class="card-body">
+                                <a href="{% url 'personal-taskboard' user.username %}">
+                                    <h5 class="card-title mb-4">Your Personal Tasks</h5>
+                                    <p class="card-text">
+                                        There are <strong>{{ user.created_personal_tasks.count }}</strong> tasks to do!
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tasks tasks-hover">
-                        <a href="{% url 'teams-dashboard' user.username %}">
-                            <h4>Your Teams</h4>
-                            <p>You are included in <strong>{{ user.teams.count }}</strong> teams</p>
-                        </a>
+                    <div class="col-sm-6">
+                        <div class="card custom-card card-link-hover">
+                            <div class="card-body">
+                                <a href="{% url 'teams-dashboard' user.username %}">
+                                    <h5 class="card-title mb-4">Your Teams</h5>
+                                    <p class="card-text">
+                                        You are included in <strong>{{ user.teams.count }}</strong> teams
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </section>
+                </div>
             </div>
-
         {% else %}
-            <h1>Welcome to TockTime !</h1>
-            <p>
-                A home for your personal and team’s tasks!
-            </p>
-            <div class="nav-home">
-                {% include 'common/nav-home-page.html' %}
+            <div>
+                <h1 class="mt-5">Welcome to TockTime !</h1>
+                <h5 class="mt-4">
+                    A home for your personal and team’s tasks!
+                </h5>
+                <div class="d-flex">
+                    {% include 'common/nav-home-page.html' %}
+                </div>
             </div>
         {% endif %}
     </div>

@@ -1,18 +1,27 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    <div class="task">
-        <div class="details">
-            <div class="form edit-form">
+    <div class="form task">
+        <div class="container-fluid d-flex flex-column">
+            <div class="form gap-1">
                 
                 {% include 'tasks/tasks_personal/personal-task-details-common.html' %}
 
                 <div class="profile-btns">
-                    <a href="{% url 'personal-task-edit' user.username object.pk %}" class="btn dropbtn">Edit</a>
-                    <a href="{% url 'personal-task-delete' user.username object.pk %}" class="btn dropbtn">Delete</a>
+                    <a class="btn btn-secondary" 
+                       href="{% url 'personal-task-edit' user.username object.pk %}">
+                        Edit
+                    </a>
+                    <a class="btn btn-secondary" 
+                       href="{% url 'personal-task-delete' user.username object.pk %}">
+                        Delete
+                    </a>
                 </div>
                 <div class="profile-btns">
-                    <a href="{% url 'taskboard' user.username %}" class="btn dropbtn">Back</a>
+                    <a class="btn btn-secondary mt-3" 
+                       href="{% url 'personal-taskboard' user.username %}">
+                        Back
+                    </a>
                 </div>
             </div>
         </div>

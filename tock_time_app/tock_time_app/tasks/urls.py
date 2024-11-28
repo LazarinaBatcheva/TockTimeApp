@@ -2,7 +2,7 @@ from django.urls import path, include
 from tock_time_app.tasks import views
 
 personal_task_patterns = [
-    path('', views.TaskboardView.as_view(), name='taskboard'),
+    path('', views.TaskboardView.as_view(), name='personal-taskboard'),
     path('create/', views.PersonalTaskCreateView.as_view(), name='personal-task-create'),
     path('task/<int:pk>/', include([
         path('', views.PersonalTaskDetailsView.as_view(), name='personal-task-details'),

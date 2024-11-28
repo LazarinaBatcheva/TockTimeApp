@@ -2,8 +2,8 @@
 
 {% block content %}
     <div class="task">
-        <div class="details">
-            <h2>Delete Task:</h2>
+        <div class="container-fluid">
+            <h3>Delete Task:</h3>
         
             <form class="form edit-task" method="post">
 
@@ -16,8 +16,12 @@
                 <p>Are you sure you want to delete this task?</p>
 
                 <div class="profile-btns">
-                    <a class="btn dropbtn" href="{% url 'personal-task-details' user.username object.pk %}">Back</a>
-                    <button class="btn" type="submit">Delete</button>
+                    <a class="btn btn-secondary" 
+                       href="{% url 'personal-task-details' user.username object.pk %}">
+                        Back
+                    </a>
+                    
+                    <button class="btn btn-secondary" type="submit">Delete</button>
                 </div>
             
             </form>

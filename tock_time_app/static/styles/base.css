@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Itim&family=Permanent+Marker&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 *, *:before, *:after {
     box-sizing: border-box;
@@ -9,33 +9,19 @@ html {
 }
 
 body {
-    font: 1rem/1 'Itim', sans-serif;
-    color: darkslateblue;
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)), url('../images/background.png') repeat;
+    font: 1rem/1 'IBM Plex Serif', serif;
+    color: #000;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9)),
+                url('../images/background.png') repeat;
     background-size: 70px 70px;
-    margin: 2rem;
-    height: 100%;
+    padding: 1rem;
 }
 
 a {
     text-decoration: none;
-    color: darkslateblue;
-}
-
-a:hover {
-    color: darkslateblue;
+    color: #000;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 90vh;
-}
-
-.my-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-self: center;
+    min-height: 75vh;
 }

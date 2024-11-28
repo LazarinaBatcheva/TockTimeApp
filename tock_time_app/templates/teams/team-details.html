@@ -2,32 +2,52 @@
 
 {% block content %}
     <div class="form task">
-        <h2>{{ object.name }}</h2>
-        <p><strong>Created by:</strong> {{ object.created_by }}</p>
-        <div class="team-members">
-            <p><strong>Members:</strong></p>
-            {% for member in object.members.all %}
-                <p>{{ member.username }},</p>
-            {% endfor %}
-        </div>
+        <div class="container-fluid d-flex flex-column">
+            <div class="form gap-1">
+                <h4 class="mb-4">{{ object.name }}</h4>
+                <p><strong>Created by:</strong> {{ object.created_by }}</p>
 
-        <div class="form edit-form">
-            <p><strong>Tasks:</strong></p>
-            {% for task in object.tasks.all %}
-                    <p>
-                        <a href="#">{{ task.title }}</a>
-                    </p>
-            {% empty %}
-                <p>There are no tasks yet!</p>
-            {% endfor %}
-        </div>
+                <div class="d-flex justify-content-center gap-1">
+                    <p><strong>Members:</strong></p>
 
-    <div class="profile-btns">
-        <a href="{% url 'team-task-create' user.username team.slug %}" class="btn dropbtn">Create Task</a>
-    </div>
-    <div class="profile-btns">
-        <a href="#" class="btn dropbtn">Edit Team</a>
-        <a href="#" class="btn dropbtn">Delete Team</a>
-    </div>
+                    {% for member in object.members.all %}
+                        <p>{{ member.username }},</p>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex flex-column">
+                    <p><strong>Tasks:</strong></p>
+
+                    {% for task in object.tasks.all %}
+                        <p>
+                            <a href="">{{ task.title }}</a>
+                        </p>
+
+                    {% empty %}
+                        <p><i>There are no tasks yet!</i></p>
+
+                    {% endfor %}
+                </div>
+
+                <div class="profile-btns mt-4">
+                    <a class="btn btn-secondary" 
+                       href="{% url 'team-task-create' user.username team.slug %}">
+                        Create New Task
+                    </a>
+                </div>
+
+                <div class="profile-btns">
+                    <a class="btn btn-secondary" href="#">Edit Team</a>
+                    <a class="btn btn-secondary" href="#">Delete Team</a>
+                </div>
+                
+                <div class="profile-btns">
+                    <a class="btn btn-secondary mt-3" 
+                       href="{% url 'teams-dashboard' user.username %}">
+                        Back
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

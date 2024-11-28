@@ -1,29 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Itim&family=Permanent+Marker&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
-
-
-/* nav home */
-.nav-home a {
-    margin: 0 1rem;
-}
-
-.nav-home img,
-.profile-img {
-    border-radius: 50%;
-    width: 12%;
-    height: auto;
-}
-
-
-/* nav header */
-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1rem;
-}
-
-.my-logo a {
-    display: flex;
-    align-items: center;
+.navbar-nav a {
+    border-radius: 10px;
 }
 
 .my-logo-img {
@@ -32,95 +8,28 @@ header {
     border-radius: 50%;
 }
 
-.nav-header {
-    padding-top: 0.5rem;
-}
-
-.nav-header a {
-    color: darkslateblue;
-    padding: 0 1rem;
-    font-size: 1rem;
-}
-
-.profile-img {
-    text-align: start;
-    width: 40%;
+.home-img img {
+    border-radius: 50%;
+    width: 12%;
     height: auto;
-    object-fit: cover;
 }
 
-#user-img {
-    padding-right: 0;
-}
-
-.default-img {
-    width: 80%;
-    margin-right: 0.5rem;
-    margin-top: 0.2rem;
-}
-
-.dropbtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: hsl(80, 50%, 95%);
-    color: darkslateblue;
-    font-size: 1rem;
-    cursor: pointer;
-    font-family: 'Itim', sans-serif;
-    border: 1px solid darkslateblue;
-    border-radius: 10px;
-    padding: 0.3rem;
-}
-
-.dropbtn div {
-    text-align: center;
-    padding: 0;
-}
-
-#user-name {
-    padding-left: 0;
-}
-
-#user-caret-down {
-    padding: 0 1rem;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    max-width: 20%;
-}
-
-.dropdown-content {
-    background-color: hsl(80, 50%, 95%);
-    display: none;
-    position: absolute;
-    right: 0;
-    min-width: 100%;
+.link-hover a:hover, .card-link-hover:hover {
+    background-color: lightsteelblue;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
 }
 
-.dropdown-content a {
-    padding: 0.7rem;
-    text-decoration: none;
-    display: block;
-    text-align: center;
+.home-nav-link {
+    margin: 0 2rem;
 }
 
-.dropdown-content a:hover {
-    background-color: darkslateblue;
-    color: white;
+.home-img img {
+    border-radius: 50%;
+    max-width: 50%;
+    height: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+#btn-logout-user {
+    padding-bottom: 0.9rem;
 }
-
-/* logout */
-.btn-logout {
-    background-color: whitesmoke;
-    width: 50%;
-}
-

@@ -10,16 +10,12 @@
     align-items: center;
 }
 
-.my-contacts h5 {
-    margin: 1rem;
-}
-
 .icon-github, .icon-linkedin {
     padding-right: 1rem;
 }
 
 .icon-github, .icon-linkedin, .icon-mail {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
 }
 
 .icon-github {
