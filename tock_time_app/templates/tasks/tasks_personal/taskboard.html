@@ -9,9 +9,10 @@
             {% else %}
                 <div>
                     <h4>You have no tasks yet!</h4>
+                    <br>
                     <div>
                         <p>But you can create your First one</p>
-                        <a class="btn dropbtn create-task-btn"
+                        <a class="btn btn-secondary"
                            href="{% url 'personal-task-create' user.username %}">
                             Here
                         </a>

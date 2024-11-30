@@ -12,7 +12,7 @@ class TaskboardView(LoginRequiredMixin, UserProfileAccessMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        return PersonalTask.objects.for_user(self.request.user)
+        return PersonalTask.objects.for_user(self.request.user).filter(is_completed=False)
 
 
 class PersonalTaskCreateView(LoginRequiredMixin, UserProfileAccessMixin, CreateView):

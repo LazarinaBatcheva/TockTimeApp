@@ -41,7 +41,6 @@
 .errorlist li ,
 .alert-error {
     color: red;
-    width: 50%;
     text-align: center;
 }
 

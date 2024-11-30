@@ -9,17 +9,19 @@
                 <h4>Here are your teams:</h4>
             {% else %}
                 <div>
-                    <h3>There is no team yet!</h3>
-                    <div class="profile-btns">
-                        <p>But you can create one</p>
-                        <a class="btn dropbtn create-task-btn" 
-                           href="{% url 'team-create' user.username %}">
-                            Here</a>
+                    <h4>There is no team yet!</h4>
+                    <br>
+                    <div class="d-flex align-items-center gap-3">
+                        <p class="mb-0">But you can create one</p>
+                        <a class="btn btn-secondary mt-0"
+                           href="{% url 'team-create' username=request.user.username %}">
+                            Here
+                        </a>
                     </div>
                 </div>
             {% endif %}
 
-            <section class="container-fluid d-flex justify-content-center gap-3 my-4 flex-wrap">
+            <section class="container-fluid d-flex flex-column justify-content-center gap-3 my-4">
                 {% for team in object_list %}
                     <div class="card custom-card card-link-hover">
                         <a href="{% url 'team-details' user.username team.slug %}">
@@ -35,7 +37,7 @@
             </div>
 
             <div class="profile-btns">
-                <a class="btn btn-secondary" 
+                <a class="btn btn-secondary"
                    href="{% url 'team-create' user.username %}">
                     Create New Team
                 </a>

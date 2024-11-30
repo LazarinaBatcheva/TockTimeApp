@@ -12,11 +12,19 @@ class TeamsDashboardView(LoginRequiredMixin, GetTeamQuerySetMixin,  ListView):
     template_name = 'teams/teams-dashboard.html'
     paginate_by = 6
 
+    def get_queryset(self):
+        return Team.objects.filter(members=self.request.user)
+
 
 class TeamCreateView(LoginRequiredMixin, CreateView):
     model = Team
     form_class = TeamCreateForm
     template_name = 'teams/team-create.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         team = form.save(commit=False)
