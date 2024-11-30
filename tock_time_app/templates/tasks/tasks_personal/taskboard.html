@@ -1,47 +1,33 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    <div class="container-fluid d-flex flex-column m-auto gap-3 text-center">
-        <h3>Welcome to your Personal Dashboard!</h3>
+    <h3 class="text-center mt-5">Welcome to your Personal Dashboard!</h3>
+    <div class="container-fluid d-flex flex-column mt-5 gap-3 text-center">
+
         <div class="form task prnl-taskbrd">
             {% if object_list %}
-                <h4 class="mb-4">Here are your tasks:</h4>
-            {% else %}
-                <div>
-                    <h4>You have no tasks yet!</h4>
-                    <br>
-                    <div>
-                        <p>But you can create your First one</p>
-                        <a class="btn btn-secondary"
-                           href="{% url 'personal-task-create' user.username %}">
-                            Here
-                        </a>
-                    </div>
-                </div>
-            {% endif %}
-
-            {% if object_list %}
+                <h5 class="mb-4">Here are your tasks:</h5>
                 <div class="form container-fluid table-responsive">
                     <table class="container-fluid border-1">
                         <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Due Date</th>
-                            <th>Due Time</th>
-                            <th>Priority</th>
+                            <th><p>Title</p></th>
+                            <th><p>Due Date</p></th>
+                            <th><p>Due Time</p></th>
+                            <th><p>Priority</p></th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for task in object_list %}
                             <tr class="tasks-list">
-                                <td><strong>{{ task.title|truncatechars:15 }}</strong></td>
-                                <td>{{ task.deadline.date }}</td>
-                                <td>{{ task.deadline.time }}</td>
-                                <td class="priority {{ task.priority }}">
-                                    {{ task.get_priority_display }}
+                                <td><p><strong>{{ task.title|truncatechars:15 }}</strong></p></td>
+                                <td><p>{{ task.deadline.date }}</p></td>
+                                <td><p>{{ task.deadline.time }}</p></td>
+                                <td class="priority {{ task.priority }}</p>">
+                                    <p>{{ task.get_priority_display }}</p>
                                 </td>
                                 <td>
-                                    <a class="btn btn-secondary mt-2 px-3 py-1"
+                                    <a class="btn btn-secondary mb-4 mt-2 py-1"
                                        href="{% url 'personal-task-details' user.username task.pk %}">
                                         <strong>View</strong>
                                     </a>
@@ -52,13 +38,25 @@
                     </table>
 
                     <div class="mt-5 mb-3">
-                    {% include 'common/paginator.html' %}
+                        {% include 'common/paginator.html' %}
                     </div>
 
                     <div class="profile-btns">
                         <a class="btn btn-secondary"
                            href="{% url 'personal-task-create' user.username %}">
                             Create New Task
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div>
+                    <h5>You have no tasks yet!</h5>
+                    <br>
+                    <div class="d-flex align-items-center gap-3">
+                        <p>But you can create your First one</p>
+                        <a class="btn btn-secondary mt-0 mb-3"
+                           href="{% url 'personal-task-create' user.username %}">
+                            Here
                         </a>
                     </div>
                 </div>

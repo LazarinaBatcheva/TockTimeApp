@@ -68,3 +68,8 @@ p label::before {
 .edit-task p label::before {
     content: none;
 }
+
+#id_is_completed_helptext {
+    font-size: 0.8rem;
+    font-style: italic;
+}

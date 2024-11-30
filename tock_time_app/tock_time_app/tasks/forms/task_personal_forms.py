@@ -36,3 +36,6 @@ class PersonalTaskEditForm(PersonalTaskBaseForm):
 
     class Meta(PersonalTaskBaseForm.Meta):
         fields = ['title', 'priority', 'deadline', 'description', 'note', 'is_completed']
+        help_texts = {
+            'is_completed': '* If you mark this task as completed, it will be moved to the Archive. *',
+        }

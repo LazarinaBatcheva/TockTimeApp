@@ -30,6 +30,10 @@
                        href="{% url 'teams-dashboard' user.username %}">
                         Teams
                     </a>
+                    <a class="nav-link active mt-2"
+                       href="{% url 'personal-tasks-archive' user.username %}">
+                        Archive
+                    </a>
 
                     <form method="post" action="{% url 'logout' %}" id="btn-logout-user">
                         {% csrf_token %}

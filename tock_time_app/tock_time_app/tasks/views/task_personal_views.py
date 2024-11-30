@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from tock_time_app.common.mixins import UserProfileAccessMixin
@@ -80,3 +81,35 @@ class PersonalTaskDetailsView(LoginRequiredMixin, UserProfileAccessMixin, Detail
 
     model = PersonalTask
     template_name = 'tasks/tasks_personal/personal-task-details.html'
+
+
+class UnarchiveTaskView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):
+    """ Unarchives a task by marking it as incomplete. """
+
+    model = PersonalTask
+    fields = []  # No fields are needed because the update will be handled directly in form_valid.
+    template_name = 'tasks/tasks_personal/archive.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.is_completed = False
+        task.save()
+
+        return super().form_valid(form)
+
+
+class ArchivedTasksView(LoginRequiredMixin, UserProfileAccessMixin, ListView):
+    """
+    Displays a list of completed personal tasks for the logged-in user.
+    Implements pagination with 5 tasks per page.
+    """
+
+    model = PersonalTask
+    template_name = 'tasks/tasks_personal/archive.html'
+    paginate_by = 5
+
+    def get_queryset(self):
+        """ Filters tasks to only include completed tasks for the current user. """
+
+        return PersonalTask.objects.for_user(self.request.user).filter(is_completed=True)
