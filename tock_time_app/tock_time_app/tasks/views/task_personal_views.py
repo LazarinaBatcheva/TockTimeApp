@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from tock_time_app.common.mixins import UserProfileAccessMixin
@@ -89,7 +88,6 @@ class UnarchiveTaskView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):
     model = PersonalTask
     fields = []  # No fields are needed because the update will be handled directly in form_valid.
     template_name = 'tasks/tasks_personal/archive.html'
-    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -97,6 +95,14 @@ class UnarchiveTaskView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):
         task.save()
 
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy(
+            'personal-tasks-archive',
+            kwargs={
+                'username': self.kwargs['username'],
+            }
+        )
 
 
 class ArchivedTasksView(LoginRequiredMixin, UserProfileAccessMixin, ListView):
