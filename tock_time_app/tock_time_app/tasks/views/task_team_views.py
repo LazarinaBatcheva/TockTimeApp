@@ -9,12 +9,23 @@ from tock_time_app.teams.models import Team
 
 
 class TeamTaskCreateView(LoginRequiredMixin, ObjectOwnerAccessMixin, CreateView):
+    """
+    View for creating a new task within a team.
+    Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.
+    """
+
     model = TeamTask
     form_class = TeamTaskCreateForm
     template_name = 'tasks/tasks_team/team-task-create.html'
-    owner_model = Team
+    owner_model = Team  # Specifies the model used to validate team ownership.
 
     def form_valid(self, form):
+        """
+        Custom logic for handling the form submission:
+        - Associates the created task with the specified team.
+        - Sets the logged-in user as the creator of the task.
+        """
+
         task = form.save(commit=False)
         task.team = get_object_or_404(Team, slug=self.kwargs['slug'])
         task.created_by = self.request.user

@@ -4,6 +4,11 @@ from tock_time_app.tasks.models import TeamTask
 
 
 class TeamTaskCreateForm(MarkRequiredFieldsMixin, forms.ModelForm):
+    """
+    Form for creating a TeamTask.
+    Adds functionality to mark required fields with an indicator and provides custom widgets.
+    """
+
     required_indicator = '<span class="required-indicator">*</span>'
 
     class Meta:

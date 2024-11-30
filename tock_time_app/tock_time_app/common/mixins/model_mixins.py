@@ -2,6 +2,7 @@ import re
 from django.contrib.auth import get_user_model
 from django.db import models
 
+# Get the currently active user model
 UserModel = get_user_model()
 
 

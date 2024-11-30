@@ -6,6 +6,11 @@ UserModel = get_user_model()
 
 
 class TeamTask(TaskBaseModel):
+    """
+    Model representing tasks assigned to a team or team members.
+    Extends TaskBaseModel and includes fields for assigned users, team, and creator.
+    """
+
     assigned_to = models.ManyToManyField(
         to=UserModel,
         related_name='assigned_tasks',

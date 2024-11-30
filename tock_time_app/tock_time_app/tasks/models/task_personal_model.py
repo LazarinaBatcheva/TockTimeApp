@@ -8,6 +8,11 @@ UserModel = get_user_model()
 
 
 class PersonalTask(TaskBaseModel):
+    """
+    Model for personal tasks, extending the shared TaskBaseModel.
+    Includes fields for priority and the user who created the task.
+    """
+
     priority = models.CharField(
         max_length=50,
         choices=TaskPriorityChoices.choices,
@@ -20,4 +25,4 @@ class PersonalTask(TaskBaseModel):
         related_name='created_personal_tasks',
     )
 
-    objects = PersonalTaskManager()
+    objects = PersonalTaskManager() # Custom manager for additional query functionality.

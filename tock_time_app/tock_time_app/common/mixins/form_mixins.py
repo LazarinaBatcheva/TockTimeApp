@@ -2,19 +2,22 @@ from django.utils.safestring import mark_safe
 
 
 class FieldHandlerMixin:
-    """Base mixin providing utility methods for handling form fields"""
+    """Base mixin providing utility methods for manipulating form fields and their attributes."""
     def set_field_attribute(self, field_names, attribute, value):
         for field_name in field_names:
             if field_name in self.fields:
                 setattr(self.fields[field_name], attribute, value)
 
     def update_widget_attrs(self, field_names, attribute, value):
+        """ Updates widget attributes for the specified fields. """
         for field_name in field_names:
             if field_name in self.fields:
                 self.fields[field_name].widget.attrs.update({attribute: value})
 
 
 class PlaceholderMixin(FieldHandlerMixin):
+    """ Mixin for adding placeholder attributes to form fields. """
+
     placeholder_fields = {}
 
     def __init__(self, *args, **kwargs):
@@ -28,6 +31,8 @@ class PlaceholderMixin(FieldHandlerMixin):
 
 
 class NoHelpTextMixin(FieldHandlerMixin):
+    """ Mixin for removing help text from specified form fields. """
+
     help_text_fields = []
 
     def __init__(self, *args, **kwargs):
@@ -39,6 +44,11 @@ class NoHelpTextMixin(FieldHandlerMixin):
 
 
 class MarkRequiredFieldsMixin(FieldHandlerMixin):
+    """
+    Mixin for marking required fields with an indicator in their label.
+    The 'required_indicator' specifies the text (e.g., '*') to prepend to required field labels.
+    """
+
     required_indicator = ''
 
     def __init__(self, *args, **kwargs):

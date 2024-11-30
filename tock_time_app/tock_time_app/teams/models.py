@@ -7,6 +7,13 @@ UserModel = get_user_model()
 
 
 class Team(DescriptionMixin, CreatedAtMixin, models.Model):
+    """
+    Model representing a team.
+
+    Includes fields for team name, creator, members, a unique slug,
+    and optional description and created_at (via mixins).
+    """
+
     name = models.CharField(
         max_length=100,
         unique=True,
@@ -30,6 +37,10 @@ class Team(DescriptionMixin, CreatedAtMixin, models.Model):
     )
 
     def save(self, *args, **kwargs):
+        """
+        Overrides the save method to generate a unique slug if it is not already set.
+        """
+
         super().save(*args, **kwargs)
 
         if not self.slug:

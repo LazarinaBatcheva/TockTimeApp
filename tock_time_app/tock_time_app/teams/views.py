@@ -8,20 +8,31 @@ from tock_time_app.teams.models import Team
 
 
 class TeamsDashboardView(LoginRequiredMixin, GetTeamQuerySetMixin,  ListView):
+    """
+    View for displaying a list of teams the logged-in user is a member of.
+    Implements pagination with 5 teams per page.
+    """
+
     model = Team
     template_name = 'teams/teams-dashboard.html'
-    paginate_by = 6
-
-    def get_queryset(self):
-        return Team.objects.filter(members=self.request.user)
+    paginate_by = 5
 
 
 class TeamCreateView(LoginRequiredMixin, CreateView):
+    """
+    View for creating a new team.
+    Allows the logged-in user to create a team and automatically adds them as a member.
+    """
+
     model = Team
     form_class = TeamCreateForm
     template_name = 'teams/team-create.html'
 
     def get_form_kwargs(self):
+        """
+        Passes the current user to the form's constructor for filtering the 'members' field.
+        """
+
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
@@ -45,6 +56,11 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
 
 
 class TeamDetailsView(LoginRequiredMixin, GetTeamQuerySetMixin, DetailView):
+    """
+    View for displaying the details of a specific team.
+    Restricts access to teams the current user is a member of.
+    """
+
     model = Team
     template_name = 'teams/team-details.html'
 
