@@ -1,13 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView
+from tock_time_app.common.mixins import UserTeamsMixin
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.forms import TeamCreateForm
-from tock_time_app.teams.mixins import GetTeamQuerySetMixin
 from tock_time_app.teams.models import Team
 
 
-class TeamsDashboardView(LoginRequiredMixin, GetTeamQuerySetMixin,  ListView):
+class TeamsDashboardView(LoginRequiredMixin, UserTeamsMixin, ListView):
     """
     View for displaying a list of teams the logged-in user is a member of.
     Implements pagination with 5 teams per page.
@@ -16,6 +18,13 @@ class TeamsDashboardView(LoginRequiredMixin, GetTeamQuerySetMixin,  ListView):
     model = Team
     template_name = 'teams/teams-dashboard.html'
     paginate_by = 5
+
+    def get_object(self, queryset=None):
+        """
+        Ensures the user can access the requested team.
+        """
+        queryset = self.get_queryset()
+        return get_object_or_404(queryset, slug=self.kwargs['slug'])
 
 
 class TeamCreateView(LoginRequiredMixin, CreateView):
@@ -55,7 +64,7 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
         )
 
 
-class TeamDetailsView(LoginRequiredMixin, GetTeamQuerySetMixin, DetailView):
+class TeamDetailsView(LoginRequiredMixin, UserTeamsMixin, DetailView):
     """
     View for displaying the details of a specific team.
     Restricts access to teams the current user is a member of.

@@ -1,12 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from tock_time_app.common.mixins import UserProfileAccessMixin
+from tock_time_app.common.mixins import UserProfileAccessMixin, UserTasksMixin
 from tock_time_app.tasks.forms.task_personal_forms import PersonalTaskCreateForm, PersonalTaskEditForm
 from tock_time_app.tasks.models import PersonalTask
 
 
-class TaskboardView(LoginRequiredMixin, UserProfileAccessMixin, ListView):
+class TaskboardView(LoginRequiredMixin, UserProfileAccessMixin, UserTasksMixin, ListView):
     """
     Displays a list of incomplete personal tasks for the logged-in user.
     Implements pagination with 5 tasks per page.
@@ -15,11 +15,7 @@ class TaskboardView(LoginRequiredMixin, UserProfileAccessMixin, ListView):
     model = PersonalTask
     template_name = 'tasks/tasks_personal/taskboard.html'
     paginate_by = 5
-
-    def get_queryset(self):
-        """ Filters tasks to only include incomplete tasks for the current user. """
-
-        return PersonalTask.objects.for_user(self.request.user).filter(is_completed=False)
+    task_status = False # Set the task status to incomplete
 
 
 class PersonalTaskCreateView(LoginRequiredMixin, UserProfileAccessMixin, CreateView):
@@ -105,7 +101,7 @@ class UnarchiveTaskView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):
         )
 
 
-class ArchivedTasksView(LoginRequiredMixin, UserProfileAccessMixin, ListView):
+class ArchivedTasksView(LoginRequiredMixin, UserProfileAccessMixin, UserTasksMixin, ListView):
     """
     Displays a list of completed personal tasks for the logged-in user.
     Implements pagination with 5 tasks per page.
@@ -114,8 +110,4 @@ class ArchivedTasksView(LoginRequiredMixin, UserProfileAccessMixin, ListView):
     model = PersonalTask
     template_name = 'tasks/tasks_personal/archive.html'
     paginate_by = 5
-
-    def get_queryset(self):
-        """ Filters tasks to only include completed tasks for the current user. """
-
-        return PersonalTask.objects.for_user(self.request.user).filter(is_completed=True)
+    task_status = True  # Set the task status to completed

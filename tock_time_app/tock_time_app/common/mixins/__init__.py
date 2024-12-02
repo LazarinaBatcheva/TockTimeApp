@@ -4,7 +4,8 @@ from .model_mixins import DescriptionMixin, CreatedAtMixin
 from .form_mixins import PlaceholderMixin, NoHelpTextMixin
 # Profile access mixins
 from .access_mixins import UserProfileAccessMixin
-
+# Queryset mixins
+from .queryset_mixins import UserTeamsMixin, UserTasksMixin
 
 __all__ = [
     # Model-related mixins
@@ -16,5 +17,9 @@ __all__ = [
     'NoHelpTextMixin',
 
     # Profile access mixins
-    'UserProfileAccessMixin'
+    'UserProfileAccessMixin',
+
+    # Queryset mixins
+    'UserTeamsMixin',
+    'UserTasksMixin',
 ]

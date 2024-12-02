@@ -13,7 +13,7 @@
                                 <a href="{% url 'personal-taskboard' user.username %}">
                                     <h5 class="card-title mb-4">Your Personal Tasks</h5>
                                     <p class="card-text">
-                                        There are <strong>{{ user.created_personal_tasks.count }}</strong> tasks to do!
+                                        There are <strong>{{ personal_tasks.count }}</strong> tasks to do!
                                     </p>
                                 </a>
                             </div>
@@ -25,7 +25,7 @@
                                 <a href="{% url 'teams-dashboard' user.username %}">
                                     <h5 class="card-title mb-4">Your Teams</h5>
                                     <p class="card-text">
-                                        You are included in <strong>{{ user.teams.count }}</strong> teams
+                                        You are included in <strong>{{ teams.count }}</strong> teams
                                     </p>
                                 </a>
                             </div>
