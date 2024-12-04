@@ -1,0 +1,27 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="container-fluid m-auto">
+        <div class="card form task">
+            <h4 class="mb-5">Hey, {{ request.user.username }}!</h4>
+
+            {% block delete-page %}
+            {% endblock %}
+
+            <form class="form" method="post">
+
+                {% csrf_token %}
+
+                <div class="profile-btns">
+                    <a class="btn btn-secondary"
+                       onclick="window.history.back()">
+                        Back
+                    </a>
+                    
+                    <button class="btn btn-secondary" type="submit">Delete</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

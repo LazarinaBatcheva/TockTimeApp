@@ -43,8 +43,14 @@
                     </div>
 
                     <div class="profile-btns">
-                        <a class="btn btn-secondary" href="{% url 'team-edit' request.user.username team.slug %}">Edit Team</a>
-                        <a class="btn btn-secondary" href="#">Delete Team</a>
+                        <a class="btn btn-secondary" 
+                           href="{% url 'team-edit' request.user.username team.slug %}">
+                            Edit Team
+                        </a>
+                        <a class="btn btn-secondary" 
+                           href="{% url 'team-delete' request.user.username team.slug %}">
+                            Delete Team
+                        </a>
                     </div>
                 {% endif %}
 

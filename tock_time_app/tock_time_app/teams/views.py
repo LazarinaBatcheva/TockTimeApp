@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from tock_time_app.common.mixins import UserTeamsMixin
 from tock_time_app.common.mixins.access_mixins import TeamObjectOwnerAccessMixin
 from tock_time_app.tasks.models import TeamTask
@@ -84,6 +84,17 @@ class TeamEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UpdateView):
                 'username': self.kwargs['username'],
             }
         )
+
+
+class TeamDeleteView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, DeleteView):
+    """
+    View for deleting a team.
+    Allows the team creator to delete the team.
+    """
+
+    model = Team
+    template_name = 'teams/team-delete.html'
+    success_url = reverse_lazy('teams-dashboard')
 
 
 class TeamDetailsView(LoginRequiredMixin, UserTeamsMixin, DetailView):

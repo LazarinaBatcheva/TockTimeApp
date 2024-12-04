@@ -7,6 +7,7 @@ teams_patterns = [
     path('<slug:slug>/', include([
         path('', views.TeamDetailsView.as_view(), name='team-details'),
         path('edit/', views.TeamEditView.as_view(), name='team-edit'),
+        path('delete/', views.TeamDeleteView.as_view(), name='team-delete'),
     ])),
 ]
 

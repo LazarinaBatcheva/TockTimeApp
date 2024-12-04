@@ -6,7 +6,7 @@
             <h2>Edit Profile:</h2>
             <p class="mt-4"><strong><i>{{ request.user.profile.user.username }}</i></strong></p>
 
-            <form class="form container-fluid" method="post" enctype="multipart/form-data">
+            <form class="form edit-task container-fluid" method="post" enctype="multipart/form-data">
 
                 {% csrf_token %}
                 {{ form.as_p }}

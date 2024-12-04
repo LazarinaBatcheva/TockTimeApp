@@ -1,7 +1,7 @@
 {% extends 'tasks/task-details.html' %}
 
 {% block task-details %}
-    <h4 class="mb-4">{{ task.title }}</h4>
+    <h4 class="mb-4">{{ task.title|wordwrap:30|linebreaksbr }}</h4>
 
     <p>Priority: {{ task.get_priority_display }}</p>
 
