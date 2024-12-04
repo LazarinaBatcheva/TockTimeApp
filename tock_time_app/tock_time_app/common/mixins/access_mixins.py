@@ -29,12 +29,24 @@ class UserProfileAccessMixin(PermissionRequiredMixin):
     """
 
     def test_func(self):
-        profile = get_object_or_404(Profile, user__username=self.kwargs['username'])
+        profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
 
         return self.request.user == profile.user
 
 
-class ObjectOwnerAccessMixin(PermissionRequiredMixin):
+class UserTaskAccessMixin(PermissionRequiredMixin):
+    """
+    Mixin to restrict access to a task-related view.
+    Ensures that only the owner of the task can access it.
+    """
+
+    def test_func(self):
+        task = get_object_or_404(self.get_queryset().model, pk=self.kwargs['pk'])
+
+        return self.request.user == task.created_by
+
+
+class TeamObjectOwnerAccessMixin(PermissionRequiredMixin):
     """Mixin to ensure the user has access to objects they own."""
 
     owner_model = None   # Allows setting a specific model if not derived from the queryset.

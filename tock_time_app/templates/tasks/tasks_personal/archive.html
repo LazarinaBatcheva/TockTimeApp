@@ -5,11 +5,11 @@
         <h3>Archive</h3>
         {% if object_list %}
             <div class="form task table-responsive m-auto" style="width: 50%">
-                <p class="pb-4">Here are all the tasks that you have archived:</p>
+                <p class="pb-4">Here are all the tasks that you have completed:</p>
                 <table class="container-fluid">
                     <thead>
                     <tr>
-                        <th><p class="mb-0">Title</p></th>
+                        <th><p class="mb-0 me-3">Title</p></th>
                         <th><p class="mb-0">Due Date</p></th>
                         <th><p class="mb-0">Due Time</p></th>
                     </tr>
@@ -17,9 +17,9 @@
                     <tbody>
                     {% for task in object_list %}
                         <tr class="tasks-list">
-                            <td><p class="m-3">{{ task.title|truncatechars:15 }}</p></td>
-                            <td><p class="mt-3">{{ task.deadline.date }}</p></td>
-                            <td><p class="mt-3">{{ task.deadline.time }}</p></td>
+                            <td><p class="me-3">{{ task.title|truncatechars:15 }}</p></td>
+                            <td><p>{{ task.deadline.date }}</p></td>
+                            <td><p>{{ task.deadline.time }}</p></td>
                             <td>
                             <div class="d-flex">
                                 <form method="post" class="form"
@@ -27,13 +27,13 @@
 
                                     {% csrf_token %}
 
-                                        <button class="btn btn-secondary mt-0"
+                                        <button class="btn btn-secondary mt-1"
                                            type="submit">
                                             Unarchive
                                         </button>
                                     </form>
 
-                                <a class="btn btn-secondary mt-0"
+                                <a class="btn btn-secondary mt-1"
                                    href="{% url 'personal-task-delete' request.user.username task.pk %}">
                                     Delete
                                 </a>

@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from tock_time_app.common.mixins import UserTeamsMixin
-from tock_time_app.common.mixins.access_mixins import ObjectOwnerAccessMixin
+from tock_time_app.common.mixins.access_mixins import TeamObjectOwnerAccessMixin
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.forms import TeamCreateForm, TeamEditForm
 from tock_time_app.teams.models import Team
@@ -58,7 +58,7 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
         )
 
 
-class TeamEditView(LoginRequiredMixin, ObjectOwnerAccessMixin, UpdateView):
+class TeamEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UpdateView):
     """
     View for editing a team.
     Allows the team creator to update the team's details.

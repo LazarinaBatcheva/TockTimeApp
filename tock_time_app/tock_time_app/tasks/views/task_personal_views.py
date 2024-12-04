@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from tock_time_app.common.mixins import UserProfileAccessMixin, UserTasksMixin
-from tock_time_app.common.mixins.access_mixins import ObjectCreatorMixin
+from tock_time_app.common.mixins.access_mixins import ObjectCreatorMixin, UserTaskAccessMixin
 from tock_time_app.tasks.forms.task_personal_forms import PersonalTaskCreateForm, PersonalTaskEditForm
 from tock_time_app.tasks.models import PersonalTask
 
 
-class TaskboardView(LoginRequiredMixin, UserProfileAccessMixin, UserTasksMixin, ListView):
+class TaskboardView(LoginRequiredMixin, UserTasksMixin, ListView):
     """
     Displays a list of incomplete personal tasks for the logged-in user.
     Implements pagination with 5 tasks per page.
@@ -16,7 +17,12 @@ class TaskboardView(LoginRequiredMixin, UserProfileAccessMixin, UserTasksMixin, 
     model = PersonalTask
     template_name = 'tasks/tasks_personal/taskboard.html'
     paginate_by = 5
-    task_status = False # Set the task status to incomplete
+    task_status = False  # Set the task status to incomplete
+
+    def test_func(self):
+        task = get_object_or_404(self.get_queryset().model, user__username=self.kwargs['username'])
+
+        return self.request.user == task.created_by
 
 
 class PersonalTaskCreateView(LoginRequiredMixin, UserProfileAccessMixin, CreateView):
@@ -41,7 +47,7 @@ class PersonalTaskCreateView(LoginRequiredMixin, UserProfileAccessMixin, CreateV
         )
 
 
-class PersonalTaskEditView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):
+class PersonalTaskEditView(LoginRequiredMixin, UserTaskAccessMixin, UpdateView):
     """ Allows a logged-in user to edit an existing personal task. """
 
     model = PersonalTask
@@ -57,7 +63,7 @@ class PersonalTaskEditView(LoginRequiredMixin, UserProfileAccessMixin, UpdateVie
         )
 
 
-class PersonalTaskDeleteView(LoginRequiredMixin, UserProfileAccessMixin, DeleteView):
+class PersonalTaskDeleteView(LoginRequiredMixin, UserTaskAccessMixin, DeleteView):
     """ Allows a logged-in user to delete a personal task. """
 
     model = PersonalTask
@@ -72,7 +78,7 @@ class PersonalTaskDeleteView(LoginRequiredMixin, UserProfileAccessMixin, DeleteV
         )
 
 
-class PersonalTaskDetailsView(LoginRequiredMixin, UserProfileAccessMixin, ObjectCreatorMixin, DetailView):
+class PersonalTaskDetailsView(LoginRequiredMixin, UserTaskAccessMixin, ObjectCreatorMixin, DetailView):
     """ Displays details for a specific personal task. """
 
     model = PersonalTask
@@ -80,7 +86,7 @@ class PersonalTaskDetailsView(LoginRequiredMixin, UserProfileAccessMixin, Object
     context_object_name = 'task'
 
 
-class UnarchiveTaskView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):
+class UnarchiveTaskView(LoginRequiredMixin, UserTaskAccessMixin, UpdateView):
     """ Unarchives a task by marking it as incomplete. """
 
     model = PersonalTask
@@ -103,7 +109,7 @@ class UnarchiveTaskView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):
         )
 
 
-class ArchivedTasksView(LoginRequiredMixin, UserProfileAccessMixin, UserTasksMixin, ListView):
+class ArchivedTasksView(LoginRequiredMixin, UserTasksMixin, ListView):
     """
     Displays a list of completed personal tasks for the logged-in user.
     Implements pagination with 5 tasks per page.
