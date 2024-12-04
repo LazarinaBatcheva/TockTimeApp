@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from tock_time_app.common.mixins import UserProfileAccessMixin, UserTasksMixin
+from tock_time_app.common.mixins.access_mixins import ObjectCreatorMixin
 from tock_time_app.tasks.forms.task_personal_forms import PersonalTaskCreateForm, PersonalTaskEditForm
 from tock_time_app.tasks.models import PersonalTask
 
@@ -71,11 +72,12 @@ class PersonalTaskDeleteView(LoginRequiredMixin, UserProfileAccessMixin, DeleteV
         )
 
 
-class PersonalTaskDetailsView(LoginRequiredMixin, UserProfileAccessMixin, DetailView):
+class PersonalTaskDetailsView(LoginRequiredMixin, UserProfileAccessMixin, ObjectCreatorMixin, DetailView):
     """ Displays details for a specific personal task. """
 
     model = PersonalTask
     template_name = 'tasks/tasks_personal/personal-task-details.html'
+    context_object_name = 'task'
 
 
 class UnarchiveTaskView(LoginRequiredMixin, UserProfileAccessMixin, UpdateView):

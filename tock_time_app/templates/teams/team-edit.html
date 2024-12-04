@@ -1,16 +1,17 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    <div class="task">
-        <div class="container-fluid">
-            <h3>Edit Task:</h3>
-            <p class="profile-name"><i>{{ task.title }}</i></p>
-            <form class="form edit-task" method="post">
+    <div class="container-fluid m-auto">
+        <div class="task card">
+            <h2>Edit Team:</h2>
+            <p class="mt-4"><strong><i>{{ team.name }}</i></strong></p>
+
+            <form class="form container-fluid" method="post" enctype="multipart/form-data">
 
                 {% csrf_token %}
                 {{ form.as_p }}
 
-                <div class="profile-btns">
+                <div class="profile-btns container-fluid d-flex flex-wrap">
                     <a class="btn btn-secondary"
                        onclick="window.history.back()">
                         Back
@@ -18,6 +19,7 @@
                     <button class="btn btn-secondary" type="submit">Update</button>
                 </div>
             </form>
+
         </div>
     </div>
 {% endblock %}

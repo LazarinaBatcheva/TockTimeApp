@@ -4,15 +4,15 @@
     <div class="form task">
         <div class="container-fluid d-flex flex-column">
             <div class="form gap-1">
-                <h4 class="mb-4">{{ object.name }}</h4>
-                <p><strong>Created by: </strong><i>{{ object.created_by }}</i></p>
+                <h4 class="mb-4">{{ team.name }}</h4>
+                <p><strong>Created by: </strong>{{ team.created_by }}</p>
 
                 <div class="d-flex justify-content-center gap-1">
                     <p class="pt-3"><strong>Members:</strong></p>
-                    {% if object.members.exists %}
-                        <p>{{ object.members.all|join:', ' }}</p>
-                    {% else %}
-                        <a class="btn btn-secondary mt-0" href="#">Add member</a>
+                    {% if team.members.exists %}
+                        <p class="mb-0 pt-3">{{ team.members.all|join:', ' }}</p>
+{#                    {% else %}#}
+{#                        <a class="btn btn-secondary mt-0" href="#">Add member</a>#}
                     {% endif %}
                 </div>
 
@@ -20,9 +20,13 @@
                     <p><strong>Tasks:</strong></p>
 
                     {% for task in team_tasks.all %}
-                        <p>
-                            <a href=""><i>{{ task.title }}</i></a>
-                        </p>
+                        <div class="d-flex align-items-center justify-content-center gap-3 mb-3 profile-btns">
+                            <p class="mb-0"><i>{{ task.title }}</i></p>
+                            <a class="btn btn-secondary mt-0"
+                               href="{% url 'team-task-details' request.user.username team.slug task.pk %}">
+                                View
+                            </a>
+                        </div>
 
                     {% empty %}
                         <p><i>There are no tasks yet!</i></p>
@@ -30,21 +34,23 @@
                     {% endfor %}
                 </div>
 
-                <div class="profile-btns mt-4">
-                    <a class="btn btn-secondary"
-                       href="{% url 'team-task-create' user.username team.slug %}">
-                        Create New Task
-                    </a>
-                </div>
+                {% if request.user == team.created_by %}
+                    <div class="profile-btns mt-4">
+                        <a class="btn btn-secondary"
+                           href="{% url 'team-task-create' request.user.username team.slug %}">
+                            Create New Task
+                        </a>
+                    </div>
+
+                    <div class="profile-btns">
+                        <a class="btn btn-secondary" href="{% url 'team-edit' request.user.username team.slug %}">Edit Team</a>
+                        <a class="btn btn-secondary" href="#">Delete Team</a>
+                    </div>
+                {% endif %}
 
                 <div class="profile-btns">
-                    <a class="btn btn-secondary" href="#">Edit Team</a>
-                    <a class="btn btn-secondary" href="#">Delete Team</a>
-                </div>
-                
-                <div class="profile-btns">
-                    <button class="btn btn-secondary" 
-                       onclick="window.history.back()">
+                    <button class="btn btn-secondary"
+                            onclick="window.history.back()">
                         Back
                     </button>
                 </div>

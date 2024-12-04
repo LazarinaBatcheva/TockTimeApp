@@ -10,7 +10,7 @@ class UserTeamsMixin:
 
         return Team.objects.filter(
             Q(members=self.request.user) | Q(created_by=self.request.user)
-        )
+        ).distinct()
 
 
 class UserTasksMixin:

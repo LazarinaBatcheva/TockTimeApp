@@ -11,3 +11,8 @@ td {
 .teams-view {
     width: 100%;
 }
+
+td p {
+    margin-bottom: 0;
+    padding: 0;
+}

@@ -1,0 +1,32 @@
+{% extends 'tasks/task-details.html' %}
+
+{% block task-details %}
+    <h4 class="mb-4">{{ task.title }}</h4>
+
+    <p>Team: <strong>{{ task.team.name }}</strong></p>
+
+    <p>Created: {{ task.created_at.date }} - {{ task.created_at.time }}</p>
+
+    <p>Deadline: {{ task.deadline.date }} - {{ task.deadline.time }}</p>
+
+    {% if task.assigned_to.exists %}
+        <p>Assigned to: {{ task.assigned_to.all|join:', ' }}</p>
+    {% else %}
+        <p>Assigned to: -----</p>
+    {% endif %}
+    <p>Created by: {{ task.created_by.username }}</p>
+
+    {% if task.description %}
+        <p>Description: {{ task.description }}</p>
+    {% endif %}
+
+    {% if task.note %}
+        <p>Note: {{ task.note }}</p>
+    {% endif %}
+
+    {% if task.is_completed %}
+        <p>Completed: Yes</p>
+    {% else %}
+        <p>Completed: No</p>
+    {% endif %}
+{% endblock %}

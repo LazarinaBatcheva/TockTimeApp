@@ -6,6 +6,7 @@ teams_patterns = [
     path('create/', views.TeamCreateView.as_view(), name='team-create'),
     path('<slug:slug>/', include([
         path('', views.TeamDetailsView.as_view(), name='team-details'),
+        path('edit/', views.TeamEditView.as_view(), name='team-edit'),
     ])),
 ]
 

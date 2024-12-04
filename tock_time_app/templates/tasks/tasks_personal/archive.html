@@ -23,7 +23,7 @@
                             <td>
                             <div class="d-flex">
                                 <form method="post" class="form"
-                                      action="{% url 'personal-task-unarchive' user.username task.pk %}">
+                                      action="{% url 'personal-task-unarchive' request.user.username task.pk %}">
 
                                     {% csrf_token %}
 
@@ -34,7 +34,7 @@
                                     </form>
 
                                 <a class="btn btn-secondary mt-0"
-                                   href="{% url 'personal-task-delete' user.username task.pk %}">
+                                   href="{% url 'personal-task-delete' request.user.username task.pk %}">
                                     Delete
                                 </a>
                             </div>

@@ -40,8 +40,8 @@ class Team(DescriptionMixin, CreatedAtMixin, models.Model):
         """
         Overrides the save method to generate a unique slug if it is not already set.
         """
-
-        super().save(*args, **kwargs)
+        if not self.pk:
+            super().save(*args, **kwargs)
 
         if not self.slug:
             self.slug = slugify(f'{self.name}-{self.id}')

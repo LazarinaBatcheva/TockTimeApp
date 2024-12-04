@@ -5,28 +5,28 @@
     <div class="card text-center container-fluid m-auto" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title mb-4">Profile Details:</h5>
-            <p class="card-text"><strong><i>{{ user.username }}</i></strong></p>
+            <p class="card-text"><strong><i>{{ request.user.username }}</i></strong></p>
 
             <div class="profile-img mb-4">
                 {% if user.profile.profile_picture %}
-                    <img src="{{ user.profile.profile_picture.url }}" alt="{{ user.username }}.img">
+                    <img src="{{ request.user.profile.profile_picture.url }}" alt="{{ request.user.username }}.img">
                 {% else %}
                     <img class="profile-img" 
                          src="{% static 'images/user.png' %}" 
-                         alt="{{ user.username }}.img">
+                         alt="{{ request.user.username }}.img">
                 {% endif %}
             </div>
 
             <div class="profile-info mb-4">
                 {% if user.profile.get_name %}
-                    <p class="mb-3">{{ user.profile.get_name }}</p>
+                    <p class="mb-3">{{ request.user.profile.get_name }}</p>
                 {% endif %}
 
                 {% if user.email %}
-                    <p class="mb-3">{{ user.email }}</p>
+                    <p class="mb-3">{{ request.user.email }}</p>
                 {% endif %}
 
-                <p class="mb-3">Joined on {{ user.date_joined }}</p>
+                <p class="mb-3">Joined on {{ request.user.date_joined }}</p>
             </div>
 
             <div class="profile-btns">
@@ -40,7 +40,7 @@
                 </a>
             </div>
 
-            <a class="btn btn-secondary" href="{% url 'home' %}">Back To Home</a>
+            <a class="btn btn-secondary" onclick="window.history.back()">Back</a>
         </div>
     </div>
 {% endblock %}

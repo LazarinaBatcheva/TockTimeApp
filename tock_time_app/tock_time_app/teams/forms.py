@@ -18,20 +18,27 @@ class TeamBaseForm(forms.ModelForm):
 class TeamCreateForm(MarkRequiredFieldsMixin, TeamBaseForm):
     """
     Form for creating a new team.
-
-    Adds functionality to mark required fields and filters the 'members'
-    queryset to exclude the current user.
+    Adds functionality to mark required fields.
     """
 
-    required_indicator = '<span class="required-indicator">*</span>'    # Indicator for required fields.
+    # Indicator for required fields.
+    required_indicator = '<span class="required-indicator">*</span>'
 
     def __init__(self, *args, **kwargs):
-        """
-        Custom initialization for the form.
-        Excludes the currently logged-in user from the 'members' field queryset.
-        """
-
         user = kwargs.pop('user', None)
+
         super().__init__(*args, **kwargs)
 
-        self.fields['members'].queryset = self.fields['members'].queryset.exclude(pk=user.pk)
+        if user:
+            choices = [
+                (u.pk, f'{u.username} - team\'s creator' if u == user else u.username)
+                for u in self.fields['members'].queryset
+            ]
+
+            self.fields['members'].choices = choices
+
+
+class TeamEditForm(TeamBaseForm):
+    """ Form for editing an existing team. """
+
+    pass

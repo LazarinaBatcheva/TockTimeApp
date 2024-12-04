@@ -4,13 +4,13 @@
 {% block content %}
     <div class="container-fluid d-flex flex-column m-auto gap-3 text-center">
         {% if request.user.is_authenticated %}
-            <h3>Welcome, <i>{{ user.username }}</i> !</h3>
+            <h3>Welcome, <i>{{ request.user.username }}</i> !</h3>
             <div class="form form-view d-flex">
                 <div class="row">
                     <div class="col-sm-6 mb-sm-0">
                         <div class="card custom-card card-link-hover">
                             <div class="card-body">
-                                <a href="{% url 'personal-taskboard' user.username %}">
+                                <a href="{% url 'personal-taskboard' request.user.username %}">
                                     <h5 class="card-title mb-4">Your Personal Tasks</h5>
                                     <p class="card-text">
                                         There are <strong>{{ personal_tasks.count }}</strong> tasks to do!
@@ -22,7 +22,7 @@
                     <div class="col-sm-6">
                         <div class="card custom-card card-link-hover">
                             <div class="card-body">
-                                <a href="{% url 'teams-dashboard' user.username %}">
+                                <a href="{% url 'teams-dashboard' request.user.username %}">
                                     <h5 class="card-title mb-4">Your Teams</h5>
                                     <p class="card-text">
                                         You are included in <strong>{{ teams.count }}</strong> teams

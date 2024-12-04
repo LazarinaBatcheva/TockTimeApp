@@ -14,7 +14,7 @@
                     <div class="d-flex align-items-center gap-3">
                         <p class="mb-0">But you can create one</p>
                         <a class="btn btn-secondary mt-0"
-                           href="{% url 'team-create' username=request.user.username %}">
+                           href="{% url 'team-create' request.user.username %}">
                             Here
                         </a>
                     </div>
@@ -24,7 +24,7 @@
             <section class="container-fluid d-flex flex-column justify-content-center gap-3 my-4">
                 {% for team in object_list %}
                     <div class="card custom-card card-link-hover">
-                        <a href="{% url 'team-details' user.username team.slug %}">
+                        <a href="{% url 'team-details' request.user.username team.slug %}">
                             <h5>{{ team.name }}</h5>
                             <p>There are <strong>{{ team.tasks.count }}</strong> tasks</p>
                         </a>
@@ -38,7 +38,7 @@
 
             <div class="profile-btns">
                 <a class="btn btn-secondary"
-                   href="{% url 'team-create' user.username %}">
+                   href="{% url 'team-create' request.user.username %}">
                     Create New Team
                 </a>
             </div>

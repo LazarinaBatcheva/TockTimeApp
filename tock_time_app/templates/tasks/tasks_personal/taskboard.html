@@ -19,16 +19,18 @@
                         </thead>
                         <tbody>
                         {% for task in object_list %}
-                            <tr class="tasks-list">
+                            <tr>
                                 <td><p><strong>{{ task.title|truncatechars:15 }}</strong></p></td>
                                 <td><p>{{ task.deadline.date }}</p></td>
                                 <td><p>{{ task.deadline.time }}</p></td>
-                                <td class="priority {{ task.priority }}</p>">
-                                    <p>{{ task.get_priority_display }}</p>
+                                <td>
+                                    <p class="priority {{ task.priority|lower }}">
+                                        {{ task.get_priority_display }}
+                                    </p>
                                 </td>
                                 <td>
-                                    <a class="btn btn-secondary mb-4 mt-2 py-1"
-                                       href="{% url 'personal-task-details' user.username task.pk %}">
+                                    <a class="btn btn-secondary mb-1 mt-2 py-1"
+                                       href="{% url 'personal-task-details' request.user.username task.pk %}">
                                         <strong>View</strong>
                                     </a>
                                 </td>
@@ -43,7 +45,7 @@
 
                     <div class="profile-btns">
                         <a class="btn btn-secondary"
-                           href="{% url 'personal-task-create' user.username %}">
+                           href="{% url 'personal-task-create' request.user.username %}">
                             Create New Task
                         </a>
                     </div>
@@ -55,7 +57,7 @@
                     <div class="d-flex align-items-center gap-3">
                         <p>But you can create your First one</p>
                         <a class="btn btn-secondary mt-0 mb-3"
-                           href="{% url 'personal-task-create' user.username %}">
+                           href="{% url 'personal-task-create' request.user.username %}">
                             Here
                         </a>
                     </div>

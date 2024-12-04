@@ -15,3 +15,15 @@
 .profile-btns a {
     padding: 0.05rem 0.4rem;
 }
+
+.priority.high {
+    color: red;
+}
+
+.priority.medium {
+    color: orange;
+}
+
+.priority.low {
+    color: green;
+}

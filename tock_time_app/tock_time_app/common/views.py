@@ -16,11 +16,12 @@ class HomePageView(TemplateView, UserTeamsMixin, UserTasksMixin):
 
         context = super().get_context_data(**kwargs)
 
-        # Set the task_status to filter for incomplete tasks
-        self.task_status = False
-        context['personal_tasks'] = UserTasksMixin.get_queryset(self)
+        if self.request.user.is_authenticated:
+            # Set the task_status to filter for incomplete tasks
+            self.task_status = False
+            context['personal_tasks'] = UserTasksMixin.get_queryset(self)
 
-        # Retrieve teams using UserTeamsMixin
-        context['teams'] = UserTeamsMixin.get_queryset(self)
+            # Retrieve teams using UserTeamsMixin
+            context['teams'] = UserTeamsMixin.get_queryset(self)
 
-        return context
+            return context

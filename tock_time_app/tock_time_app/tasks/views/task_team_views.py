@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from tock_time_app.common.mixins.access_mixins import ObjectOwnerAccessMixin
+from django.views.generic import CreateView, DetailView
+from tock_time_app.common.mixins.access_mixins import ObjectOwnerAccessMixin, ObjectCreatorMixin
 from tock_time_app.tasks.forms import TeamTaskCreateForm
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.models import Team
@@ -41,3 +41,29 @@ class TeamTaskCreateView(LoginRequiredMixin, ObjectOwnerAccessMixin, CreateView)
                 'slug': self.kwargs['slug'],
             }
         )
+
+
+class TeamTaskDetailsView(LoginRequiredMixin, ObjectCreatorMixin, DetailView):
+    """
+    View for displaying details of a team task.
+    """
+
+    model = TeamTask
+    template_name = 'tasks/tasks_team/team-task-details.html'
+    context_object_name = 'task'
+
+    def get_object(self, queryset=None):
+        """
+        Custom logic to retrieve the task object:
+        - Ensures the task belongs to the specified team.
+        - Validates that the user has access to the task.
+        """
+
+        task = super().get_object(queryset)
+        team = get_object_or_404(Team, slug=self.kwargs['slug'])
+
+        if task.team != team:
+            # If the task does not belong to the team, return None to trigger a 404 error.
+            return None
+
+        return task

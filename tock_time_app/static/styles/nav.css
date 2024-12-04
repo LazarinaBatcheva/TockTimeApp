@@ -33,11 +33,3 @@
 #btn-logout-user {
     padding-bottom: 0.9rem;
 }
-
-.circle-count {
-    font-size: 0.7rem;
-    padding: 0.3rem;
-    border-radius: 50%;
-    border: 1px solid #000;
-    background-color: whitesmoke;
-}

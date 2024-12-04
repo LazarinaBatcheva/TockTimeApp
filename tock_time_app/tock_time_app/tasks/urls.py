@@ -17,6 +17,9 @@ personal_task_patterns = [
 
 team_task_patterns = [
     path('task/create/', views.TeamTaskCreateView.as_view(), name='team-task-create'),
+    path('task/<int:pk>/', include([
+        path('', views.TeamTaskDetailsView.as_view(), name='team-task-details'),
+    ])),
 ]
 
 urlpatterns = [
