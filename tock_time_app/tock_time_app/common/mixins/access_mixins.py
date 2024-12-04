@@ -29,7 +29,7 @@ class UserProfileAccessMixin(PermissionRequiredMixin):
     """
 
     def test_func(self):
-        profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        profile = get_object_or_404(Profile, user__username=self.kwargs['username'])
 
         return self.request.user == profile.user
 
