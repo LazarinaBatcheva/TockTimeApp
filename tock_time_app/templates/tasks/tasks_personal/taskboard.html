@@ -63,6 +63,11 @@
                     </div>
                 </div>
             {% endif %}
+
+            <a class="mt-2 btn btn-secondary"
+               href="{% url 'personal-tasks-archive' request.user.username %}">
+                View Archive
+            </a>
         </div>
     </div>
 {% endblock %}

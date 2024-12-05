@@ -12,16 +12,16 @@
 
                 {% csrf_token %}
 
-                <div class="profile-btns">
-                    <a class="btn btn-secondary"
-                       onclick="window.history.back()">
-                        Back
-                    </a>
-                    
-                    <button class="btn btn-secondary" type="submit">Delete</button>
-                </div>
+                <button class="btn btn-secondary" type="submit">Delete</button>
 
             </form>
+
+            <div class="d-flex align-self-start">
+                <button class="btn btn-secondary mt-0"
+                   onclick="window.history.back()">
+                    Back
+                </button>
+            </div>
         </div>
     </div>
 {% endblock %}

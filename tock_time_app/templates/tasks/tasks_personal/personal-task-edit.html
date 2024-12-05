@@ -1,7 +1,7 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    <div class="task">
+    <div class="form task">
         <div class="container-fluid">
             <h3>Edit Task:</h3>
             <p class="profile-name"><i>{{ task.title }}</i></p>
@@ -9,15 +9,16 @@
 
                 {% csrf_token %}
                 {{ form.as_p }}
-
-                <div class="profile-btns">
-                    <a class="btn btn-secondary"
-                       onclick="window.history.back()">
-                        Back
-                    </a>
-                    <button class="btn btn-secondary" type="submit">Update</button>
-                </div>
+                
+                <button class="btn btn-secondary" type="submit">Update</button>
             </form>
+            
+            <div class="d-flex align-self-start">
+                <button class="btn btn-secondary mt-0"
+                        onclick="window.history.back()">
+                    Back
+                </button>
+            </div>
         </div>
     </div>
 {% endblock %}
