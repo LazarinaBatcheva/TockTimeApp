@@ -28,6 +28,10 @@ class TeamTask(TaskBaseModel):
         related_name='created_team_tasks',
     )
 
+    is_approved = models.BooleanField(
+        default=False,
+    )
+
     class Meta:
         permissions = [
             ('assign_task', 'Can assign task to user'),
