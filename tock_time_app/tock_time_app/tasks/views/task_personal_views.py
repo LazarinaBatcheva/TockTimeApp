@@ -1,8 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from tock_time_app.common.mixins import UserProfileAccessMixin, UserTasksMixin
+from tock_time_app.common.mixins import UserTasksMixin
 from tock_time_app.common.mixins.access_mixins import ObjectCreatorMixin, UserTaskAccessMixin
 from tock_time_app.tasks.forms.task_personal_forms import PersonalTaskCreateForm, PersonalTaskEditForm
 from tock_time_app.tasks.models import PersonalTask
@@ -19,13 +18,8 @@ class TaskboardView(LoginRequiredMixin, UserTasksMixin, ListView):
     paginate_by = 5
     task_status = False  # Set the task status to incomplete
 
-    def test_func(self):
-        task = get_object_or_404(self.get_queryset().model, user__username=self.kwargs['username'])
 
-        return self.request.user == task.created_by
-
-
-class PersonalTaskCreateView(LoginRequiredMixin, UserProfileAccessMixin, CreateView):
+class PersonalTaskCreateView(LoginRequiredMixin, CreateView):
     """ Allows a logged-in user to create a new personal task. """
 
     model = PersonalTask
