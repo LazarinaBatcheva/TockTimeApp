@@ -6,9 +6,9 @@ class UserTeamsMixin:
     """ Mixin to filter teams the current user is associated with. """
 
     def get_queryset(self):
-        Team = apps.get_model('teams.Team')
+        team = apps.get_model('teams.Team')
 
-        return Team.objects.filter(
+        return team.objects.filter(
             Q(members=self.request.user) | Q(created_by=self.request.user)
         ).distinct()
 

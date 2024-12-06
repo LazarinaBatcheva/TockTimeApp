@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     "tock_time_app.accounts.apps.AccountsConfig",
     "tock_time_app.common.apps.CommonConfig",
     "tock_time_app.tasks.apps.TasksConfig",
-    "tock_time_app.teams.apps.TeamsConfig"
+    "tock_time_app.teams.apps.TeamsConfig",
+    "tock_time_app.friends.apps.FriendsConfig"
 ]
 
 MIDDLEWARE = [

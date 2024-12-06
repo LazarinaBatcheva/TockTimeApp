@@ -11,8 +11,6 @@
                     <p class="pt-3"><strong>Members:</strong></p>
                     {% if team.members.exists %}
                         <p class="mb-0 pt-3">{{ team.members.all|join:', ' }}</p>
-                        {#                    {% else %}#}
-                        {#                        <a class="btn btn-secondary mt-0" href="#">Add member</a>#}
                     {% endif %}
                 </div>
 
