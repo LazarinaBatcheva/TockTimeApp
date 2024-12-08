@@ -8,7 +8,7 @@
             <div class="form form-view d-flex">
                 <div class="row">
                     <div class="col-sm-6 mb-sm-0">
-                        <div class="card custom-card card-link-hover">
+                        <div class="card custom-card card-link-hover bg-custom">
                             <div class="card-body">
                                 <a href="{% url 'personal-taskboard' request.user.username %}">
                                     <h5 class="card-title mb-4">Your Personal Tasks</h5>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="card custom-card card-link-hover">
+                        <div class="card custom-card card-link-hover bg-custom">
                             <div class="card-body">
                                 <a href="{% url 'teams-dashboard' request.user.username %}">
                                     <h5 class="card-title mb-4">Your Teams</h5>

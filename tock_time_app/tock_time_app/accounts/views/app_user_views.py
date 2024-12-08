@@ -5,8 +5,9 @@ This module provides views for user registration, login, and logout.
 
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.views import LogoutView, LoginView
+from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from tock_time_app.accounts.forms import AppUserCreationForm
 
 # Get the custom user model
@@ -43,3 +44,21 @@ class AppUserLogOutView(LogoutView):
     """ Handles user logout. """
 
     pass
+
+
+class SearchUserView(ListView):
+    model = UserModel
+    template_name = 'accounts/search_user.html'
+    context_object_name = 'users'
+
+    def get_queryset(self):
+        search_query = self.request.GET.get('search', '')
+
+        if search_query:
+            return UserModel.objects.filter(
+                Q(username__icontains=search_query) |
+                Q(profile__first_name__icontains=search_query) |
+                Q(profile__last_name__icontains=search_query)
+            )
+
+        return UserModel.objects.none()

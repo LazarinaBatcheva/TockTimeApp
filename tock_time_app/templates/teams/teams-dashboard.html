@@ -2,14 +2,14 @@
 
 {% block content %}
     <div class="form form-view m-auto gap-3">
-        <h3>Welcome to your Teams Dashboard</h3>
+        <h4>Welcome to your Teams Dashboard</h4>
 
-        <div class="form task teams-view">
+        <div class="form task teams-view bg-team-dash">
             {% if object_list %}
-                <h4>Here are your teams:</h4>
+                <h5>Here are your teams:</h5>
             {% else %}
                 <div>
-                    <h4>There is no team yet!</h4>
+                    <h5>There is no team yet!</h5>
                     <br>
                     <div class="d-flex align-items-center gap-3">
                         <p class="mb-0">But you can create one</p>

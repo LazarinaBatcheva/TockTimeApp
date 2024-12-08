@@ -1,6 +1,9 @@
 /* personal taskboard */
 .prnl-taskbrd {
     width: 60%;
+    /*background-color: #acdcf4;*/
+    border: 2px solid #f56161;
+    box-shadow: 5px 5px 10px #f56161;
 }
 
 td {

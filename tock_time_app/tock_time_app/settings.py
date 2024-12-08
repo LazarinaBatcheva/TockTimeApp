@@ -29,11 +29,9 @@ SECRET_KEY = config('SECRET_KEY', None)
 DEBUG = config('DEBUG', default=False, cast=bool)   # config('DEBUG', None) = 'True'
 
 # ALLOWED_HOST = config('ALLOWED_HOST',).split(', )
-# ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '76b1-87-116-135-119.ngrok-free.app']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
 
-# CSRF_TRUSTED_ORIGINS = []  TODO
-CSRF_TRUSTED_ORIGINS = ['https://76b1-87-116-135-119.ngrok-free.app']
+# CSRF_TRUSTED_ORIGINS = []
 
 
 # Security Settings
@@ -54,7 +52,8 @@ INSTALLED_APPS = [
     "tock_time_app.common.apps.CommonConfig",
     "tock_time_app.tasks.apps.TasksConfig",
     "tock_time_app.teams.apps.TeamsConfig",
-    "tock_time_app.friends.apps.FriendsConfig"
+    "tock_time_app.friends.apps.FriendsConfig",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

@@ -12,7 +12,7 @@ class ProfileBaseForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        exclude = ['user', ]    # Excludes the 'user' field to prevent editing
+        exclude = ['user', 'friends']    # Excludes the 'user' and 'friends' fields to prevent editing
 
 
 class ProfileEditForm(ProfileBaseForm):

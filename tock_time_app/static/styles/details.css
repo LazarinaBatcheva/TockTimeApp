@@ -27,3 +27,15 @@
 .priority.low {
     color: green;
 }
+
+.custom-img {
+    border-radius: 50%;
+    width: 10%;
+    height: auto;
+}
+
+/* friends details */
+.friends-view {
+    align-self: center;
+    max-width: 50%;
+}

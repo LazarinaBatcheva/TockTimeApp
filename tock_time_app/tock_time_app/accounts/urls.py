@@ -14,6 +14,7 @@ urlpatterns = [
     path('register/', views.AppUserRegisterView.as_view(), name='register'),
     path('login/', views.AppUserLogInView.as_view(), name='login'),
     path('logout/', views.AppUserLogOutView.as_view(), name='logout'),
+    path('search/', views.SearchUserView.as_view(), name='search-user'),
 
     # Nested URLs for profile management
     path('profile/', include([

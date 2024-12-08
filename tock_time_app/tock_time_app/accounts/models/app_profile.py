@@ -19,6 +19,12 @@ class Profile(models.Model):
         related_name='profile',
     )
 
+    friends = models.ManyToManyField(
+        to='self',
+        symmetrical=True,
+        blank=True,
+    )
+
     first_name = models.CharField(
         max_length=30,
         blank=True,

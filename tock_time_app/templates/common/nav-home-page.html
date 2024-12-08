@@ -1,13 +1,10 @@
 {% load static %}
 
-<div class="home-img mt-5">
-    <a href="{% url 'register' %}">
-        <img src="{% static 'images/join-us.gif' %}" alt="Registration">
+<div class="d-flex justify-content-center gap-5 home-img mt-5">
+    <a class="text-end" href="{% url 'register' %}">
+        <img src="{% static 'images/sign_in.gif' %}" alt="Registration">
     </a>
-    <a class="home-nav-link" href="{% url 'login' %}">
+    <a class="home-img text-start" href="{% url 'login' %}">
         <img src="{% static 'images/login.gif' %}" alt="LogIn">
-    </a>
-    <a href="#">
-        <img src="{% static 'images/task-management.gif' %}" alt="Task management">
     </a>
 </div>

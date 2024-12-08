@@ -43,9 +43,17 @@ class ProfileDeletedPageView(TemplateView):
     template_name = 'accounts/profile-deleted-page.html'
 
 
-class ProfileDetailsView(LoginRequiredMixin, UserProfileAccessMixin, DetailView):
+class ProfileDetailsView(LoginRequiredMixin, DetailView):
     """ View for displaying user profile details. """
 
     model = UserModel
     template_name = 'accounts/profile-details.html'
+    context_object_name = 'profile'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_owner'] = self.request.user == self.object.pk
+        context['friends_list'] = [friend.user.username for friend in self.object.profile.friends.all()]
+        context['are_friends'] = self.request.user.profile.friends.filter(pk=self.object.profile.pk).exists()
+
+        return context
