@@ -1,0 +1,36 @@
+.my-footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5rem;
+}
+
+.my-contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-github, .icon-linkedin {
+    padding-right: 1rem;
+}
+
+.icon-github, .icon-linkedin, .icon-mail {
+    font-size: 1.5rem;
+}
+
+.icon-github {
+    color: #000;
+}
+
+.icon-linkedin {
+    color:  #0A66C2;
+}
+
+.icon-mail {
+    color: #D93025;
+}
+
+.my-footer p {
+    font-style: italic;
+    font-size: 0.8rem;
+}

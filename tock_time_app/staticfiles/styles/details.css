@@ -1,0 +1,41 @@
+.profile-img img {
+    max-width: 60%;
+    border-radius: 10%;
+    box-shadow: 2px 5px 16px 0px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+.profile-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-btns a {
+    padding: 0.05rem 0.4rem;
+}
+
+.priority.high {
+    color: red;
+}
+
+.priority.medium {
+    color: orange;
+}
+
+.priority.low {
+    color: green;
+}
+
+.custom-img {
+    border-radius: 50%;
+    width: 10%;
+    height: auto;
+}
+
+/* friends details */
+.friends-view {
+    align-self: center;
+    max-width: 50%;
+}
