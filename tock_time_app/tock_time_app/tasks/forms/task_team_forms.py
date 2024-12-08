@@ -14,6 +14,13 @@ class TeamTaskBaseForm(forms.ModelForm):
             'note': forms.Textarea(attrs={'rows': 3}),
         }
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user and hasattr(user, 'profile'):
+            self.fields['assigned_to'].queryset = user.profile.friends.all()
+
 
 class TeamTaskCreateForm(MarkRequiredFieldsMixin, TeamTaskBaseForm):
     """

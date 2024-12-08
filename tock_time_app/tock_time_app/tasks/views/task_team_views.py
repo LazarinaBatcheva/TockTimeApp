@@ -3,12 +3,13 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView
 from tock_time_app.common.mixins.access_mixins import TeamObjectOwnerAccessMixin, ObjectCreatorMixin
+from tock_time_app.mixins import UserFormKwargsMixin
 from tock_time_app.tasks.forms import TeamTaskCreateForm
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.models import Team
 
 
-class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, CreateView):
+class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFormKwargsMixin, CreateView):
     """
     View for creating a new task within a team.
     Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.

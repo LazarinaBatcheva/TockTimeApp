@@ -45,8 +45,10 @@ class Profile(models.Model):
     def get_name(self):
         if self.first_name and self.last_name:
             return f'{self.first_name} {self.last_name}'
-
-        return self.first_name or self.last_name
+        elif self.first_name or self.last_name:
+            return self.first_name or self.last_name
+        else:
+            return self.user.username
 
     def __str__(self):
         return self.get_name()

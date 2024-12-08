@@ -14,6 +14,24 @@ class TeamBaseForm(forms.ModelForm):
         model = Team
         fields = ['name', 'members',]
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+
+        super().__init__(*args, **kwargs)
+
+        if user and hasattr(user, 'profile') and user.profile.friends.exists():
+            friends_queryset = user.profile.friends.all()
+
+            choices = [
+                (user.pk, f'{user.username} - team\'s creator')
+            ] + [
+                (friend.user.pk, friend.user.username) for friend in friends_queryset
+            ]
+        else:
+            choices = [(user.pk, f'{user.username} - team\'s creator')]
+
+        self.fields['members'].choices = choices
+
 
 class TeamCreateForm(MarkRequiredFieldsMixin, TeamBaseForm):
     """
@@ -23,19 +41,6 @@ class TeamCreateForm(MarkRequiredFieldsMixin, TeamBaseForm):
 
     # Indicator for required fields.
     required_indicator = '<span class="required-indicator">*</span>'
-
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-
-        super().__init__(*args, **kwargs)
-
-        if user:
-            choices = [
-                (u.pk, f'{u.username} - team\'s creator' if u == user else u.username)
-                for u in self.fields['members'].queryset
-            ]
-
-            self.fields['members'].choices = choices
 
 
 class TeamEditForm(TeamBaseForm):
