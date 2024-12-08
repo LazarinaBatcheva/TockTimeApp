@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 from tock_time_app.common.mixins.access_mixins import TeamObjectOwnerAccessMixin, ObjectCreatorMixin
 from tock_time_app.mixins import UserFormKwargsMixin
-from tock_time_app.tasks.forms import TeamTaskCreateForm
+from tock_time_app.tasks.forms import TeamTaskCreateForm, TeamTaskEditForm
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.models import Team
 
@@ -44,6 +44,33 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFor
         )
 
 
+class TeamTaskEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFormKwargsMixin, UpdateView):
+    """
+    View for editing a team task.
+    Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.
+    """
+
+    model = TeamTask
+    form_class = TeamTaskEditForm
+    template_name = 'tasks/tasks_team/team-task-edit.html'
+    owner_model = Team  # Specifies the model used to validate team ownership.
+    context_object_name = 'task'
+
+    def get_success_url(self):
+        print(self.kwargs)
+        print(self.request.user)
+        print(self.object)
+
+        return reverse_lazy(
+            'team-task-details',
+            kwargs={
+                'username': self.kwargs['username'],
+                'slug': self.kwargs['slug'],
+                'pk': self.kwargs['pk'],
+            }
+        )
+
+
 class TeamTaskDetailsView(LoginRequiredMixin, ObjectCreatorMixin, DetailView):
     """
     View for displaying details of a team task.
@@ -68,3 +95,9 @@ class TeamTaskDetailsView(LoginRequiredMixin, ObjectCreatorMixin, DetailView):
             return None
 
         return task
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['team'] = get_object_or_404(Team, slug=self.kwargs['slug'])
+
+        return context

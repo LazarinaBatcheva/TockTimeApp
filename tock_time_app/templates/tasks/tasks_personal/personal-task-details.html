@@ -1,59 +1,39 @@
 {% extends 'tasks/task-details.html' %}
 
 {% block task-details %}
-    <h4 class="mb-4">{{ task.title|wordwrap:30|linebreaksbr }}</h4>
+    <div class="form gap-1">
+        <h4 class="mb-4">{{ task.title|wordwrap:30|linebreaksbr }}</h4>
 
-    <p>Priority: {{ task.get_priority_display }}</p>
+        <p>Priority: {{ task.get_priority_display }}</p>
 
-    <p>Created: {{ task.created_at.date }} - {{ task.created_at.time }}</p>
+        <p>Created: {{ task.created_at.date }} - {{ task.created_at.time }}</p>
 
-    <p>Deadline: {{ task.deadline.date }} - {{ task.deadline.time }}</p>
+        <p>Deadline: {{ task.deadline.date }} - {{ task.deadline.time }}</p>
 
-    {% if task.description %}
-        <p>Description: {{ task.description }}</p>
-    {% endif %}
+        {% if task.description %}
+            <p>Description: {{ task.description }}</p>
+        {% endif %}
 
-    {% if task.note %}
-        <p>Note: {{ task.note }}</p>
-    {% endif %}
+        {% if task.note %}
+            <p>Note: {{ task.note }}</p>
+        {% endif %}
 
-    {% if task.is_completed %}
-        <p>Completed: Yes</p>
-    {% else %}
-        <p>Completed: No</p>
-    {% endif %}
+        {% if task.is_completed %}
+            <p>Completed: Yes</p>
+        {% else %}
+            <p>Completed: No</p>
+        {% endif %}
+        <div class="profile-btns">
+            <a class="btn btn-secondary"
+               href="{% url 'personal-task-edit' request.user.username object.pk %}">
+                Edit
+            </a>
+            {% if is_creator %}
+                <a class="btn btn-secondary btn-danger"
+                   href="{% url 'personal-task-delete' request.user.username object.pk %}">
+                    Delete
+                </a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
-
-
-
-
-
-{#{% extends 'common/base.html' %}#}
-{##}
-{#{% block content %}#}
-{#    <div class="form task">#}
-{#        <div class="container-fluid d-flex flex-column">#}
-{#            <div class="form gap-1">#}
-{##}
-{#                {% include 'tasks/tasks_personal/personal-task-details-common.html' %}#}
-{##}
-{#                <div class="profile-btns">#}
-{#                    <a class="btn btn-secondary" #}
-{#                       href="{% url 'personal-task-edit' user.username object.pk %}">#}
-{#                        Edit#}
-{#                    </a>#}
-{#                    <a class="btn btn-secondary" #}
-{#                       href="{% url 'personal-task-delete' user.username object.pk %}">#}
-{#                        Delete#}
-{#                    </a>#}
-{#                </div>#}
-{#                <div class="profile-btns">#}
-{#                    <a class="btn btn-secondary mt-3"#}
-{#                       href="{% url 'personal-taskboard' user.username %}">#}
-{#                        Back#}
-{#                    </a>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#{% endblock %}#}

@@ -47,6 +47,7 @@ class PersonalTaskEditView(LoginRequiredMixin, UserTaskAccessMixin, UpdateView):
     model = PersonalTask
     form_class = PersonalTaskEditForm
     template_name = 'tasks/tasks_personal/personal-task-edit.html'
+    context_object_name = 'task'
 
     def get_success_url(self):
         return reverse_lazy(

@@ -32,3 +32,21 @@ class TeamTaskCreateForm(MarkRequiredFieldsMixin, TeamTaskBaseForm):
 
     class Meta(TeamTaskBaseForm.Meta):
         exclude = ['is_approved',]
+
+
+class TeamTaskEditForm(TeamTaskBaseForm):
+    """
+    Form for editing a TeamTask.
+    Provides custom widgets.
+    """
+
+    class Meta(TeamTaskBaseForm.Meta):
+        fields = ['deadline', 'assigned_to', 'description', 'note', 'is_completed', 'is_approved']
+
+    def __init__(self, *args, **kwargs):
+        team = kwargs.pop('team', None)
+
+        super().__init__(*args, **kwargs)
+
+        if team:
+            self.fields['assigned_to'].queryset = team.members.all()
