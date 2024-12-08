@@ -4,7 +4,7 @@
     <div class="container-fluid d-flex flex-column mt-5 gap-3 text-center">
         <h3>Archive</h3>
         {% if object_list %}
-            <div class="form task table-responsive m-auto" style="width: 50%">
+            <div class="form task table-responsive m-auto bg-shadow-custom" style="width: 50%">
                 <p class="pb-4">Here are all the tasks that you have completed:</p>
                 <table class="container-fluid">
                     <thead>
@@ -33,7 +33,7 @@
                                         </button>
                                     </form>
 
-                                <a class="btn btn-secondary mt-1"
+                                <a class="btn btn-secondary btn-danger mt-1"
                                    href="{% url 'personal-task-delete' request.user.username task.pk %}">
                                     Delete
                                 </a>

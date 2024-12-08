@@ -14,7 +14,7 @@
                         Edit
                     </a>
                     {% if is_creator %}
-                        <a class="btn btn-secondary"
+                        <a class="btn btn-secondary btn-danger"
                            href="{% url 'personal-task-delete' request.user.username object.pk %}">
                             Delete
                         </a>
