@@ -1,5 +1,6 @@
 {% extends 'common/delete-page.html' %}
 
 {% block delete-page %}
+    <h4 class="mb-5">Hey, {{ request.user.username }}!</h4>
     <p>Are you sure you really want to <strong>Delete</strong> this Team?</p>
 {% endblock %}

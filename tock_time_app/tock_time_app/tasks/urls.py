@@ -20,6 +20,11 @@ team_task_patterns = [
     path('task/<int:pk>/', include([
         path('', views.TeamTaskDetailsView.as_view(), name='team-task-details'),
         path('edit/', views.TeamTaskEditView.as_view(), name='team-task-edit'),
+        path('delete/', views.TeamTaskDeleteView.as_view(), name='team-task-delete'),
+    ])),
+    path('tasks-for-approve/', include([
+        path('', views.TasksForApproveView.as_view(), name='tasks-for-approve'),
+        path('task/<int:pk>/', views.TaskRejectApproveView.as_view(), name='task-reject-approve'),
     ])),
 ]
 

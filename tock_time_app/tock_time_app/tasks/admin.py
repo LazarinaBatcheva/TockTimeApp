@@ -29,4 +29,4 @@ class TeamTaskAdmin(admin.ModelAdmin):
     def assigned_to_username(obj):
         """ Custom method to display usernames of users assigned to the task in the list view. """
 
-        return ', '.join([member.username for member in obj.team.members.all()])
+        return ', '.join([member.username for member in obj.assigned_to.all()])

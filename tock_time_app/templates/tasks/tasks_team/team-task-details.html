@@ -32,13 +32,16 @@
         {% endif %}
 
         <div class="profile-btns">
-            <a class="btn btn-secondary"
-               href="{% url 'team-task-edit' request.user.username team.slug task.pk %}">
-                Edit
-            </a>
+            {% if can_edit or task.created_by == self.request.user or user in task.assigned_to.all %}
+                <a class="btn btn-secondary"
+                   href="{% url 'team-task-edit' user.username task.team.slug task.pk %}">
+                    Edit Task
+                </a>
+            {% endif %}
+
             {% if is_creator %}
                 <a class="btn btn-secondary btn-danger"
-                   href="#">
+                   href="{% url 'team-task-delete' request.user.username team.slug task.pk %}">
                     Delete
                 </a>
             {% endif %}

@@ -1,0 +1,46 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="container mt-5 d-flex flex-column align-items-center">
+        <h4 class="mb-4 text-center">Tasks for Approval</h4>
+
+        {% if tasks %}
+            <ul class="list-group">
+                {% for task in tasks %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center gap-5">
+                        <div class="task-details">
+                            <h5 class="mb-3">{{ task.title }}</h5>
+                            {% if task.description %}
+                                <p><strong>Description:</strong> {{ task.description }}</p>
+                            {% endif %}
+                            <p><strong>Assigned to:</strong> {{ task.assigned_to.username }}</p>
+                            <p><strong>Deadline:</strong> {{ task.deadline|date:"d M Y H:i" }}</p>
+                            {% if task.note %}
+                                <p><strong>Note:</strong></p> {{ task.note }}
+                            {% endif %}
+                        </div>
+                        <div class="actions">
+                            <form method="post" 
+                                  action="{% url 'team-task-delete' team.created_by.username team.slug task.pk %}" 
+                                  class="d-inline">
+                                {% csrf_token %}
+                                <button class="btn btn-success btn-sm" type="submit">Approve</button>
+                            </form>
+                            <form method="post" 
+                                  action="{% url 'task-reject-approve' team.created_by.username team.slug task.pk %}" 
+                                  class="d-inline">
+                                {% csrf_token %}
+                                <button class="btn btn-danger btn-sm" type="submit">Reject</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="mt-4">
+                {% include 'common/paginator.html' %}
+            </div>
+        {% else %}
+            <p class="text-center"><i>No tasks require approval at the moment.</i></p>
+        {% endif %}
+    </div>
+{% endblock %}

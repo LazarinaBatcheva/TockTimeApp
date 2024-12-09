@@ -26,7 +26,7 @@
                     <div class="card custom-card card-link-hover">
                         <a href="{% url 'team-details' request.user.username team.slug %}">
                             <h5>{{ team.name }}</h5>
-                            <p>There are <strong>{{ team.tasks.count }}</strong> uncompleted tasks</p>
+                            <p>There are <strong>{{ team_tasks.count }}</strong> uncompleted tasks</p>
                         </a>
                     </div>
                 {% endfor %}

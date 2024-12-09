@@ -5,7 +5,7 @@
     <br>
     <p>Are you sure you want to <strong>delete</strong> this task?</p>
     <br>
-    <h5 class="mb-4">{{ object.title }}</h5>
-    <p>Priority: {{ object.get_priority_display }}</p>
-    <p>Deadline: {{ object.deadline.date }} - {{ object.deadline.time }}</p>
+    <h5 class="mb-4">{{ task.title }}</h5>
+    <p>Assigned to: {{ task.assigned_to.all|join:', ' }}</p>
+    <p>Deadline: {{ task.deadline.date }} - {{ task.deadline.time }}</p>
 {% endblock %}

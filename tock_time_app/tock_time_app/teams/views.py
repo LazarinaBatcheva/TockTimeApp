@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from tock_time_app.common.mixins import UserTeamsMixin
@@ -99,11 +100,19 @@ class TeamDetailsView(LoginRequiredMixin, UserTeamsMixin, DetailView):
     model = Team
     template_name = 'teams/team-details.html'
     context_object_name = 'team'
+    paginate_by = 3
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        tasks = TeamTask.objects.filter(team=self.object, is_completed=False)
+        paginator = Paginator(tasks, self.paginate_by)
 
-        context['team_tasks'] = TeamTask.objects.filter(team=self.object)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context['team_tasks'] = page_obj
         context['is_creator'] = self.object.created_by == self.request.user
+        context['page_obj'] = page_obj
+        context['is_paginated'] = page_obj.has_other_pages()
 
         return context

@@ -1,15 +1,16 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
 from tock_time_app.common.mixins.access_mixins import TeamObjectOwnerAccessMixin, ObjectCreatorMixin
-from tock_time_app.mixins import UserFormKwargsMixin
-from tock_time_app.tasks.forms import TeamTaskCreateForm, TeamTaskEditForm
+from tock_time_app.tasks.forms import TeamTaskCreateForm, CreatorTeamTaskEditForm, MemberTeamTaskForm
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.models import Team
 
 
-class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFormKwargsMixin, CreateView):
+class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, CreateView):
     """
     View for creating a new task within a team.
     Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.
@@ -19,6 +20,14 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFor
     form_class = TeamTaskCreateForm
     template_name = 'tasks/tasks_team/team-task-create.html'
     owner_model = Team  # Specifies the model used to validate team ownership.
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['team'] = self.get_team()
+        return kwargs
+
+    def get_team(self):
+        return get_object_or_404(Team, slug=self.kwargs['slug'])
 
     def form_valid(self, form):
         """
@@ -47,26 +56,107 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFor
 class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, UpdateView):
     """
     View for editing a team task.
-    Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.
+    Ensures the user has the proper permissions to edit the task.
     """
 
     model = TeamTask
-    form_class = TeamTaskEditForm
     template_name = 'tasks/tasks_team/team-task-edit.html'
     owner_model = Team  # Specifies the model used to validate team ownership.
     context_object_name = 'task'
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        task = self.get_object()
-        kwargs['team'] = task.team
-        kwargs['user'] = self.request.user
+    def get_form_class(self):
+        """ Dynamically return the form class based on the user's role and permissions. """
 
-        return kwargs
+        task = self.get_object()
+
+        # Check if the user has permission to edit tasks or is the task creator
+        if self.request.user == task.created_by:
+            return CreatorTeamTaskEditForm
+
+        # Check if the user is assigned to the task
+        if self.request.user in task.assigned_to.all():
+            return MemberTeamTaskForm
+
+        # If none of the above, raise a PermissionError
+        raise PermissionError('You do not have permission to edit this task.')
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Override dispatch to check 'edit_task' permission for all users except the task creator.
+        """
+
+        task = self.get_object()
+
+        if not (request.user == task.created_by or request.user in task.assigned_to.all()):
+            messages.error(request, "You do not have permission to edit this task.")
+            return redirect('team-details', username=self.kwargs['username'], slug=self.kwargs['slug'])
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse_lazy(
             'team-details',
+            kwargs={
+                'username': self.kwargs['username'],
+                'slug': self.kwargs['slug'],
+            }
+        )
+
+
+class TeamTaskDeleteView(LoginRequiredMixin, ObjectCreatorMixin, DeleteView):
+    model = TeamTask
+    template_name = 'tasks/tasks_team/team-task-delete.html'
+    context_object_name = 'task'
+
+    def get_success_url(self):
+        return reverse_lazy(
+            'team-details',
+            kwargs={
+                'username': self.kwargs['username'],
+                'slug': self.kwargs['slug'],
+            }
+        )
+
+
+class TasksForApproveView(LoginRequiredMixin, ListView):
+    """ View for displaying tasks that require approval. """
+
+    model = TeamTask
+    template_name = 'tasks/tasks_team/tasks-for-approve.html'
+    context_object_name = 'tasks'
+    paginate_by = 3
+
+    def get_queryset(self):
+        team_slug = self.kwargs['slug']
+        team = get_object_or_404(Team, slug=team_slug)
+
+        return TeamTask.objects.filter(team=team, is_completed=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['team'] = get_object_or_404(Team, slug=self.kwargs['slug'])
+
+        return context
+
+
+class TaskRejectApproveView(LoginRequiredMixin, UpdateView):
+    """
+    View for rejecting a task approval.
+    Marks the task as uncompleted and redirects to team details.
+    """
+
+    def post(self, request, *args, **kwargs):
+        task = get_object_or_404(TeamTask, pk=self.kwargs['pk'])
+
+        task.is_completed = False
+        task.save()
+
+        # Redirect to success URL
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse_lazy(
+            'tasks-for-approve',
             kwargs={
                 'username': self.kwargs['username'],
                 'slug': self.kwargs['slug'],
@@ -101,6 +191,8 @@ class TeamTaskDetailsView(LoginRequiredMixin, ObjectCreatorMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        task = self.get_object()
         context['team'] = get_object_or_404(Team, slug=self.kwargs['slug'])
+        context['can_edit'] = self.request.user.has_perm('tasks.edit_task')
 
         return context
