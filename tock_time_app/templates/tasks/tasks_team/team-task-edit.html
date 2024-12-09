@@ -1,12 +1,24 @@
 {% extends 'tasks/task-edit.html' %}
 
 {% block task-edit %}
-    <h4>Edit {{ task.title }}:</h4>
 
     <form class="form edit-task" method="post">
 
         {% csrf_token %}
-        {{ form.as_p }}
+
+        {% if is_creator %}
+            <h4 class="mb-4">Edit {{ task.title }}:</h4>
+            {{ form.as_p }}
+            
+        {% else %}
+            <h4 class="mb-5">Did you complete the task '{{ task.title }}'?</h4>
+            <label for="id_note">Note:</label>
+            {{ form.note }}
+            <br>
+            <label for="id_is_completed">Mark as completed:</label>
+            {{ form.is_completed }}
+            
+        {% endif %}
 
         <button class="btn btn-secondary btn-success" type="submit">Update</button>
     </form>

@@ -30,7 +30,7 @@
         {% else %}
             <p>Completed: No</p>
         {% endif %}
-    
+
         <div class="profile-btns">
             <a class="btn btn-secondary"
                href="{% url 'team-task-edit' request.user.username team.slug task.pk %}">

@@ -45,8 +45,15 @@ class TeamTaskEditForm(TeamTaskBaseForm):
 
     def __init__(self, *args, **kwargs):
         team = kwargs.pop('team', None)
+        user = kwargs.pop('user', None)
 
         super().__init__(*args, **kwargs)
 
         if team:
             self.fields['assigned_to'].queryset = team.members.all()
+
+        if user and self.instance.team.created_by != user:
+            restricted_fields = ['deadline', 'assigned_to', 'description', 'is_approved']
+            for field in restricted_fields:
+                self.fields[field].disabled = True
+                self.fields[field].help_text = 'This field is restricted.'

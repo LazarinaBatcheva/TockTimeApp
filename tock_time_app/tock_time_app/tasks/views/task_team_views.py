@@ -44,7 +44,7 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFor
         )
 
 
-class TeamTaskEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFormKwargsMixin, UpdateView):
+class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, UpdateView):
     """
     View for editing a team task.
     Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.
@@ -56,17 +56,20 @@ class TeamTaskEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFormK
     owner_model = Team  # Specifies the model used to validate team ownership.
     context_object_name = 'task'
 
-    def get_success_url(self):
-        print(self.kwargs)
-        print(self.request.user)
-        print(self.object)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        task = self.get_object()
+        kwargs['team'] = task.team
+        kwargs['user'] = self.request.user
 
+        return kwargs
+
+    def get_success_url(self):
         return reverse_lazy(
-            'team-task-details',
+            'team-details',
             kwargs={
                 'username': self.kwargs['username'],
                 'slug': self.kwargs['slug'],
-                'pk': self.kwargs['pk'],
             }
         )
 
