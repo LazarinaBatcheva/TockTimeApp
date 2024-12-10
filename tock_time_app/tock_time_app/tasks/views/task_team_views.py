@@ -1,16 +1,16 @@
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
-from tock_time_app.common.mixins.access_mixins import TeamObjectOwnerAccessMixin, ObjectCreatorMixin
+from tock_time_app.common.mixins import TeamObjectOwnerAccessMixin, ObjectCreatorMixin
 from tock_time_app.tasks.forms import TeamTaskCreateForm, CreatorTeamTaskEditForm, MemberTeamTaskForm
+from tock_time_app.tasks.mixins import TeamTaskFormMixin
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.models import Team
 
 
-class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, CreateView):
+class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, TeamTaskFormMixin, CreateView):
     """
     View for creating a new task within a team.
     Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.
@@ -20,11 +20,6 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, CreateV
     form_class = TeamTaskCreateForm
     template_name = 'tasks/tasks_team/team-task-create.html'
     owner_model = Team  # Specifies the model used to validate team ownership.
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['team'] = self.get_team()
-        return kwargs
 
     def get_team(self):
         return get_object_or_404(Team, slug=self.kwargs['slug'])
@@ -53,7 +48,7 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, CreateV
         )
 
 
-class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, UpdateView):
+class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, TeamTaskFormMixin, UpdateView):
     """
     View for editing a team task.
     Ensures the user has the proper permissions to edit the task.
@@ -79,19 +74,6 @@ class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, UpdateView):
 
         # If none of the above, raise a PermissionError
         raise PermissionError('You do not have permission to edit this task.')
-
-    def dispatch(self, request, *args, **kwargs):
-        """
-        Override dispatch to check 'edit_task' permission for all users except the task creator.
-        """
-
-        task = self.get_object()
-
-        if not (request.user == task.created_by or request.user in task.assigned_to.all()):
-            messages.error(request, "You do not have permission to edit this task.")
-            return redirect('team-details', username=self.kwargs['username'], slug=self.kwargs['slug'])
-
-        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse_lazy(
@@ -164,7 +146,7 @@ class TaskRejectApproveView(LoginRequiredMixin, UpdateView):
         )
 
 
-class TeamTaskDetailsView(LoginRequiredMixin, ObjectCreatorMixin, DetailView):
+class TeamTaskDetailsView(LoginRequiredMixin, DetailView):
     """
     View for displaying details of a team task.
     """
@@ -193,6 +175,6 @@ class TeamTaskDetailsView(LoginRequiredMixin, ObjectCreatorMixin, DetailView):
         context = super().get_context_data(**kwargs)
         task = self.get_object()
         context['team'] = get_object_or_404(Team, slug=self.kwargs['slug'])
-        context['can_edit'] = self.request.user.has_perm('tasks.edit_task')
+        context['is_creator'] = self.request.user == task.created_by
 
         return context

@@ -1,8 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from tock_time_app.common.mixins import UserTasksMixin
-from tock_time_app.common.mixins.access_mixins import ObjectCreatorMixin, UserTaskAccessMixin
+from tock_time_app.common.mixins import UserTasksMixin, UserTaskAccessMixin, ObjectCreatorMixin
 from tock_time_app.tasks.forms.task_personal_forms import PersonalTaskCreateForm, PersonalTaskEditForm
 from tock_time_app.tasks.models import PersonalTask
 

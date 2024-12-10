@@ -31,5 +31,5 @@ class TeamTask(TaskBaseModel):
     class Meta(TaskBaseModel.Meta):
         permissions = [
             ('assign_task', 'Can assign task to user'),
-            ('edit_task', 'Can edit task'),
+            ('edit_task', 'Can edit specific fields of the task'),
         ]

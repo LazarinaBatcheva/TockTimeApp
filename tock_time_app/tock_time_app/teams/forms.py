@@ -1,6 +1,5 @@
 from django import forms
-
-from tock_time_app.common.mixins.form_mixins import MarkRequiredFieldsMixin
+from tock_time_app.common.mixins import MarkRequiredFieldsMixin
 from tock_time_app.teams.models import Team
 
 

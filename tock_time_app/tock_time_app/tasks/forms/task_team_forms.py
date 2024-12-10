@@ -1,5 +1,5 @@
 from django import forms
-from tock_time_app.common.mixins.form_mixins import MarkRequiredFieldsMixin
+from tock_time_app.common.mixins import MarkRequiredFieldsMixin
 from tock_time_app.tasks.models import TeamTask
 
 
@@ -38,7 +38,7 @@ class CreatorTeamTaskEditForm(TeamTaskBaseForm):
         fields = ['deadline', 'assigned_to', 'description', 'note', 'is_completed']
 
 
-class MemberTeamTaskForm(forms.ModelForm):
+class MemberTeamTaskForm(TeamTaskBaseForm):
     """ Form for team members to edit only limited fields of a TeamTask. """
     class Meta(TeamTaskBaseForm.Meta):
         model = TeamTask

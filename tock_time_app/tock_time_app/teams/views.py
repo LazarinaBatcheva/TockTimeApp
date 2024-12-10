@@ -2,8 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from tock_time_app.common.mixins import UserTeamsMixin
-from tock_time_app.common.mixins.access_mixins import TeamObjectOwnerAccessMixin
+from tock_time_app.common.mixins import UserTeamsMixin, TeamObjectOwnerAccessMixin
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.forms import TeamCreateForm, TeamEditForm
 from tock_time_app.mixins import UserFormKwargsMixin

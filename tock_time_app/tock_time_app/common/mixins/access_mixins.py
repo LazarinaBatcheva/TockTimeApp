@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponseForbidden
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from tock_time_app.accounts.models import Profile
 
