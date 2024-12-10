@@ -5,7 +5,6 @@ from django.views.generic import ListView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ViewSet
-
 from tock_time_app.accounts.models import Profile
 from tock_time_app.friends.choices import FriendRequestStatusChoices
 from tock_time_app.friends.models import FriendRequest
@@ -15,19 +14,24 @@ UserModel = get_user_model()
 
 
 class FriendsDashboardView(LoginRequiredMixin, ListView):
+    """ View for displaying a paginated list of friend requests. """
+
     model = FriendRequest
     template_name = 'friends/friends-dashboard.html'
     paginate_by = 10
 
 
 class FriendRequestViewSet(LoginRequiredMixin, ModelViewSet):
-    """ A ViewSet for handling friend requests. """
+    """ ViewSet for managing friend requests, including creating, listing, and updating. """
 
     queryset = FriendRequest.objects.all()
     serializer_class = FriendRequestSerializer
 
     def get_queryset(self):
-        """ Customize queryset based on the current action. """
+        """
+        Customize the queryset based on the action being performed.
+        For 'list' action, only pending requests for the current user are returned.
+        """
 
         if self.action == 'list':
 
@@ -39,7 +43,12 @@ class FriendRequestViewSet(LoginRequiredMixin, ModelViewSet):
         return super().get_queryset()
 
     def create(self, request, *args, **kwargs):
-        """ Handle sending a friend request. """
+        """
+        Create a friend request.
+        - Validates that the user is not sending a request to themselves.
+        - Ensures that the users are not already friends.
+        - Deletes old requests (if any) before creating a new one.
+        """
 
         receiver_username = request.data.get('receiver_username')
         receiver = get_object_or_404(UserModel, username=receiver_username)
@@ -86,7 +95,11 @@ class FriendRequestViewSet(LoginRequiredMixin, ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
-        """ Handle accepting or rejecting a friend request. """
+        """
+        Update a friend request (accept or reject).
+        - Accepting: Adds the users as friends.
+        - Rejecting: Updates the status without adding friends.
+        """
 
         friend_request = get_object_or_404(
                 FriendRequest,
@@ -121,10 +134,13 @@ class FriendRequestViewSet(LoginRequiredMixin, ModelViewSet):
 
 
 class FriendRemoveViewSet(LoginRequiredMixin, ViewSet):
-    """ A ViewSet for handling friend removal. """
+    """ ViewSet for removing friends. """
 
     def destroy(self, request, *args, **kwargs):
-        """ Handle removing a friend. """
+        """
+        Remove a friend relationship between two users.
+        - Ensures that the profiles are friends before removing the relationship.
+        """
 
         friend_pk = kwargs.get('pk')
         friend_profile = get_object_or_404(Profile, pk=friend_pk)
