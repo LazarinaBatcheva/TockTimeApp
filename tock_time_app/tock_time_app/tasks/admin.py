@@ -19,14 +19,14 @@ class PersonalTaskAdmin(admin.ModelAdmin):
 class TeamTaskAdmin(admin.ModelAdmin):
     """ Admin configuration for managing team tasks in the admin panel. """
 
-    list_display = ['title', 'assigned_to_username', 'deadline', 'is_completed', 'team']
+    list_display = ['title', 'assigned_to_usernames', 'deadline', 'is_completed', 'team']
     list_filter = ['team__name', 'is_completed',]
     date_hierarchy = 'created_at'
     search_fields = ['team', 'assigned_to_username', 'created_by__username']
     ordering = ['deadline',]
 
     @staticmethod
-    def assigned_to_username(obj):
+    def assigned_to_usernames(obj):
         """ Custom method to display usernames of users assigned to the task in the list view. """
 
         return ', '.join([member.username for member in obj.assigned_to.all()])

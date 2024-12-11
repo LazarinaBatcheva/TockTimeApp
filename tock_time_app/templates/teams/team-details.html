@@ -3,21 +3,25 @@
 {% block content %}
     <div class="form task bg-details">
         <div class="container-fluid d-flex flex-column">
+        
             {% if is_creator %}
                 <a class="btn btn-outline-warning align-self-end" 
                    href="{% url 'tasks-for-approve' request.user.username team.slug %}">
                     Tasks for Approve
                 </a>
             {% endif %}
+        
             <div class="form gap-1">
                 <h4 class="mb-4">{{ team.name }}</h4>
                 <p class="mb-0"><strong>Created by: </strong>{{ team.created_by }}</p>
 
                 <div class="d-flex justify-content-center gap-1">
                     <p class="pt-3"><strong>Members:</strong></p>
+                
                     {% if team.members.exists %}
                         <p class="mb-0 pt-3">{{ team.members.all|join:', ' }}</p>
                     {% endif %}
+                
                 </div>
 
                 <div class="d-flex flex-column">
@@ -36,11 +40,13 @@
                         <p><i>There are no tasks yet!</i></p>
 
                     {% endfor %}
+                
                     {% if is_paginated %}
-                        <div class="mt-2 mb-3">
+                        <div class="my-3">
                             {% include 'common/paginator.html' %}
                         </div>
                     {% endif %}
+                
                 </div>
 
                 {% if request.user == team.created_by %}
@@ -62,6 +68,7 @@
                         </a>
                     </div>
                 {% endif %}
+            
             </div>
             <div class="d-flex">
                 <button class="btn btn-secondary"

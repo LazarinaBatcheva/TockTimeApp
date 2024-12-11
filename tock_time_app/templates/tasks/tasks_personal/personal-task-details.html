@@ -23,17 +23,20 @@
         {% else %}
             <p>Completed: No</p>
         {% endif %}
+    
         <div class="profile-btns">
             <a class="btn btn-secondary"
                href="{% url 'personal-task-edit' request.user.username object.pk %}">
                 Edit
             </a>
+        
             {% if is_creator %}
                 <a class="btn btn-secondary btn-danger"
                    href="{% url 'personal-task-delete' request.user.username object.pk %}">
                     Delete
                 </a>
             {% endif %}
+        
         </div>
     </div>
 {% endblock %}

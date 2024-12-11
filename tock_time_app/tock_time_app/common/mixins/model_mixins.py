@@ -7,6 +7,8 @@ UserModel = get_user_model()
 
 
 class DescriptionMixin(models.Model):
+    """ Adds an optional description field to the model. """
+
     description = models.TextField(
         null=True,
         blank=True,
@@ -17,6 +19,8 @@ class DescriptionMixin(models.Model):
 
 
 class CreatedAtMixin(models.Model):
+    """ Adds a created_at field to store the creation timestamp of the model instance. """
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         blank=True,

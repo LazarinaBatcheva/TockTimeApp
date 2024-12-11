@@ -1,4 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.timezone import now
+
 from tock_time_app.common.mixins import DescriptionMixin, CreatedAtMixin
 
 
@@ -35,6 +38,14 @@ class TaskBaseModel(DescriptionMixin, CreatedAtMixin, models.Model):
             models.Index(fields=['deadline', ]),
         ]
         ordering = ['deadline',]
+
+    def clean(self):
+        """
+        Ensure the deadline is in the future or present.
+        """
+        super().clean()
+        if self.deadline < now():
+            raise ValidationError("The deadline must be in the future.")
 
     def __str__(self):
         return self.title

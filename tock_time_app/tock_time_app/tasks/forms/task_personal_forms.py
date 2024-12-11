@@ -25,7 +25,7 @@ class PersonalTaskCreateForm(MarkRequiredFieldsMixin, PersonalTaskBaseForm):
     Inherits the base form and adds functionality to mark required fields with an indicator.
     """
 
-    required_indicator = '<span class="required-indicator">*</span>'
+    pass
 
 
 class PersonalTaskEditForm(PersonalTaskBaseForm):

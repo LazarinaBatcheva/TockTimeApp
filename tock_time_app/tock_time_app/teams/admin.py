@@ -32,4 +32,6 @@ class TeamAdmin(admin.ModelAdmin):
     def get_members_names(obj):
         """ Custom method to display member usernames in the list view. """
 
-        return ', '.join([member.username for member in obj.members.all()])
+        members = obj.members.all().order_by('username')    # Sort members alphabetically.
+
+        return ', '.join([member.username for member in members])

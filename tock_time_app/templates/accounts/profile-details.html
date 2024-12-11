@@ -28,6 +28,7 @@
 
                 <div class="d-flex gap-1 mt-1 align-items-center">
                     <p class="mb-0">Friends:</p>
+                
                     {% if friends_list %}
                         <p class="mb-0">{{ friends_list|join:', '|truncatewords:5 }}</p>
                         {% if request.user == profile %}
@@ -36,9 +37,12 @@
                                 View All
                             </a>
                         {% endif %}
+                        
                     {% else %}
                         <p class="mb-0"><i>No friends yet.</i></p>
+                        
                     {% endif %}
+                
                 </div>
 
                 <p class="mt-4">Joined on {{ profile.date_joined }}</p>
@@ -55,21 +59,26 @@
                         Delete
                     </a>
                 </div>
+                
             {% else %}
                 <div class="profile-actions">
+                
                     {% if are_friends %}
                         <button class="btn btn-danger remove-friend-btn"
                                 data-friendid="{{ profile.pk }}">
                             Remove Friend
                         </button>
+                        
                     {% else %}
                         <button class="btn btn-success send-friend-request-btn"
                                 data-username="{{ profile.username }}">
                             Send Friend Request
                         </button>
+                        
                     {% endif %}
                 </div>
                 <div id="friend-request-message"></div>
+                
             {% endif %}
 
             <div class="d-flex align-self-start mt-3">

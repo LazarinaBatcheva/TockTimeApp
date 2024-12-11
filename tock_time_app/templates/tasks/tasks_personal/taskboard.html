@@ -5,6 +5,7 @@
     <div class="container-fluid d-flex flex-column mt-5 gap-3 text-center">
 
         <div class="form task prnl-taskbrd">
+        
             {% if object_list %}
                 <h5 class="mb-4">Here are your tasks:</h5>
                 <div class="form container-fluid table-responsive">
@@ -18,6 +19,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        
                         {% for task in object_list %}
                             <tr>
                                 <td><p><strong>{{ task.title|truncatechars:15 }}</strong></p></td>
@@ -36,6 +38,7 @@
                                 </td>
                             </tr>
                         {% endfor %}
+                        
                         </tbody>
                     </table>
 
@@ -50,6 +53,7 @@
                         </a>
                     </div>
                 </div>
+                
             {% else %}
                 <div>
                     <h5>You have no tasks yet!</h5>
@@ -62,6 +66,7 @@
                         </a>
                     </div>
                 </div>
+                
             {% endif %}
 
             <a class="mt-2 btn btn-secondary"

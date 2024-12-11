@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from tock_time_app.accounts.models import Profile
@@ -21,17 +22,15 @@ class FriendsDashboardView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
 
-class FriendRequestViewSet(LoginRequiredMixin, ModelViewSet):
+class FriendRequestViewSet(ModelViewSet):
     """ ViewSet for managing friend requests, including creating, listing, and updating. """
 
     queryset = FriendRequest.objects.all()
     serializer_class = FriendRequestSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        """
-        Customize the queryset based on the action being performed.
-        For 'list' action, only pending requests for the current user are returned.
-        """
+        """ Filters friend requests based on the action being performed. """
 
         if self.action == 'list':
 
@@ -133,8 +132,10 @@ class FriendRequestViewSet(LoginRequiredMixin, ModelViewSet):
         )
 
 
-class FriendRemoveViewSet(LoginRequiredMixin, ViewSet):
+class FriendRemoveViewSet(ViewSet):
     """ ViewSet for removing friends. """
+
+    permission_classes = [IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         """

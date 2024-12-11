@@ -13,11 +13,15 @@ class TeamTaskBaseForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
             'note': forms.Textarea(attrs={'rows': 3}),
         }
+        help_texts = {
+            'is_completed': '* If you mark this task as completed, it will be sent to Team Leader for approve. *',
+        }
 
     def __init__(self, *args, **kwargs):
         team = kwargs.pop('team', None)
         super().__init__(*args, **kwargs)
 
+        # Dynamically set the queryset for assigned_to field
         if team:
             self.fields['assigned_to'].queryset = team.members.all()
 
@@ -28,7 +32,8 @@ class TeamTaskCreateForm(MarkRequiredFieldsMixin, TeamTaskBaseForm):
     Adds functionality to mark required fields with an indicator and provides custom widgets.
     """
 
-    required_indicator = '<span class="required-indicator">*</span>'
+    class Meta(TeamTaskBaseForm.Meta):
+        fields = ['title', 'deadline', 'assigned_to', 'description', 'note']
 
 
 class CreatorTeamTaskEditForm(TeamTaskBaseForm):
@@ -41,5 +46,4 @@ class CreatorTeamTaskEditForm(TeamTaskBaseForm):
 class MemberTeamTaskForm(TeamTaskBaseForm):
     """ Form for team members to edit only limited fields of a TeamTask. """
     class Meta(TeamTaskBaseForm.Meta):
-        model = TeamTask
         fields = ['note', 'is_completed']

@@ -15,6 +15,7 @@ UserModel = get_user_model()
 class AppUserAdmin(UserAdmin):
     """ Custom admin panel for the AppUser model. """
 
+    # Basic configuration
     model = UserModel
     add_form = AppUserCreationForm
     form = AppUserChangeForm
@@ -22,6 +23,7 @@ class AppUserAdmin(UserAdmin):
     list_display = ['username', 'email', 'is_staff', 'is_superuser']
     readonly_fields = ['date_joined', ]
     search_fields = ['username', 'email']
+    list_filter = ['is_active', 'is_staff', 'is_superuser']
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
@@ -55,27 +57,31 @@ class AppUserAdmin(UserAdmin):
     actions = ['deactivate_users', 'activate_users', 'make_staff', 'revoke_staff']
     actions_selection_counter = 'selected users'
 
-    # Custom actions for bulk updating user properties
+    # Custom actions
     @admin.action(description='Deactivate selected app users')
     def deactivate_users(self, request, queryset):
         """ Deactivates the selected users by setting `is_active` to False. """
 
-        queryset.update(is_active=False)
+        count = queryset.update(is_active=False)
+        self.message_user(request, f'Successfully deactivated {count} users.')
 
     @admin.action(description='Activate selected app users')
     def activate_users(self, request, queryset):
         """ Activates the selected users by setting `is_active` to True"""
 
-        queryset.update(is_active=True)
+        count = queryset.update(is_active=True)
+        self.message_user(request, f'Successfully activated {count} users.')
 
     @admin.action(description='Make selected app users staff')
     def make_staff(self, request, queryset):
         """ Grants staff privileges to the selected users by setting `is_staff` to True."""
 
-        queryset.update(is_staff=True)
+        count = queryset.update(is_staff=True)
+        self.message_user(request, f'Successfully granted staff status to {count} users.')
 
     @admin.action(description='Revoke staff status from selected app users')
     def revoke_staff(self, request, queryset):
         """ Revokes staff privileges from the selected users by setting `is_staff` to False. """
 
-        queryset.update(is_staff=False)
+        count = queryset.update(is_staff=False)
+        self.message_user(request, f'Successfully revoked staff status from {count} users.')

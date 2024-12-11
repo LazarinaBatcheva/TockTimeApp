@@ -5,7 +5,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from tock_time_app.common.mixins import UserTeamsMixin, TeamObjectOwnerAccessMixin
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.forms import TeamCreateForm, TeamEditForm
-from tock_time_app.mixins import UserFormKwargsMixin
+from tock_time_app.teams.mixins import TeamSuccessUrlMixin, UserFormKwargsMixin
 from tock_time_app.teams.models import Team
 
 
@@ -20,7 +20,7 @@ class TeamsDashboardView(LoginRequiredMixin, UserTeamsMixin, ListView):
     paginate_by = 5
 
 
-class TeamCreateView(LoginRequiredMixin, UserFormKwargsMixin, CreateView):
+class TeamCreateView(LoginRequiredMixin, UserFormKwargsMixin, TeamSuccessUrlMixin, CreateView):
     """
     View for creating a new team.
     Allows the logged-in user to create a team and automatically adds them as a member.
@@ -42,16 +42,9 @@ class TeamCreateView(LoginRequiredMixin, UserFormKwargsMixin, CreateView):
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse_lazy(
-            'teams-dashboard',
-            kwargs={
-                'username': self.kwargs['username'],
-            }
-        )
 
-
-class TeamEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFormKwargsMixin, UpdateView):
+class TeamEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin,
+                   UserFormKwargsMixin, TeamSuccessUrlMixin, UpdateView):
     """
     View for editing a team.
     Allows the team creator to update the team's details.
@@ -69,14 +62,6 @@ class TeamEditView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, UserFormKwarg
         team.save()
 
         return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy(
-            'teams-dashboard',
-            kwargs={
-                'username': self.kwargs['username'],
-            }
-        )
 
 
 class TeamDeleteView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, DeleteView):

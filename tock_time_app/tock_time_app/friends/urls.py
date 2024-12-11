@@ -1,10 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from tock_time_app.friends import views
-from tock_time_app.friends.views import FriendRequestViewSet
 
+# Create a router for REST API routes
 router = DefaultRouter()
-router.register(r'friend-requests', FriendRequestViewSet, basename='friend-requests')
+router.register(r'friend-requests', views.FriendRequestViewSet, basename='friend-requests')
 router.register(r'friends-remove', views.FriendRemoveViewSet, basename='friends-remove')
 
 urlpatterns = [

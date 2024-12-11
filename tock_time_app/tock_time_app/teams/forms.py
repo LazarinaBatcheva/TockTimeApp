@@ -38,8 +38,7 @@ class TeamCreateForm(MarkRequiredFieldsMixin, TeamBaseForm):
     Adds functionality to mark required fields.
     """
 
-    # Indicator for required fields.
-    required_indicator = '<span class="required-indicator">*</span>'
+    pass
 
 
 class TeamEditForm(TeamBaseForm):

@@ -5,9 +5,11 @@
         <h4>Welcome to your Teams Dashboard</h4>
 
         <div class="form task teams-view bg-team-dash">
+        
             {% if object_list %}
                 <h5>Here are your teams:</h5>
             {% else %}
+                
                 <div>
                     <h5>There is no team yet!</h5>
                     <br>
@@ -22,6 +24,7 @@
             {% endif %}
 
             <section class="container-fluid d-flex flex-column justify-content-center gap-3 my-4">
+            
                 {% for team in object_list %}
                     <div class="card custom-card card-link-hover">
                         <a href="{% url 'team-details' request.user.username team.slug %}">
@@ -30,6 +33,7 @@
                         </a>
                     </div>
                 {% endfor %}
+            
             </section>
 
             <div class="text-center mt-5 mb-3">

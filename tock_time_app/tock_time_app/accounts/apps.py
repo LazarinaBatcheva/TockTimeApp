@@ -15,7 +15,8 @@ class AccountsConfig(AppConfig):
     def ready(self):
         """
         Called when the app is ready.
-        This method imports the signals module to register any signal handlers.
+        This method imports the signals module to ensure that all signal handlers
+        are connected when the app is loaded.
         """
 
         import tock_time_app.accounts.signals   # Ensure signals are connected when the app is loaded

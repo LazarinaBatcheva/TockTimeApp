@@ -2,15 +2,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
 from tock_time_app.common.mixins import TeamObjectOwnerAccessMixin, ObjectCreatorMixin
 from tock_time_app.tasks.forms import TeamTaskCreateForm, CreatorTeamTaskEditForm, MemberTeamTaskForm
-from tock_time_app.tasks.mixins import TeamTaskFormMixin
+from tock_time_app.tasks.mixins import TeamTaskFormMixin, TeamTasksSuccessUrlMixin
 from tock_time_app.tasks.models import TeamTask
 from tock_time_app.teams.models import Team
 
 
-class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, TeamTaskFormMixin, CreateView):
+class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, TeamTasksSuccessUrlMixin, CreateView):
     """
     View for creating a new task within a team.
     Ensures the logged-in user is the owner of the team through ObjectOwnerAccessMixin.
@@ -21,8 +22,10 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, TeamTas
     template_name = 'tasks/tasks_team/team-task-create.html'
     owner_model = Team  # Specifies the model used to validate team ownership.
 
-    def get_team(self):
-        return get_object_or_404(Team, slug=self.kwargs['slug'])
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['team'] = get_object_or_404(Team, slug=self.kwargs['slug'])
+        return kwargs
 
     def form_valid(self, form):
         """
@@ -38,17 +41,8 @@ class TeamTaskCreateView(LoginRequiredMixin, TeamObjectOwnerAccessMixin, TeamTas
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse_lazy(
-            'team-details',
-            kwargs={
-                'username': self.kwargs['username'],
-                'slug': self.kwargs['slug'],
-            }
-        )
 
-
-class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, TeamTaskFormMixin, UpdateView):
+class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, TeamTaskFormMixin, TeamTasksSuccessUrlMixin, UpdateView):
     """
     View for editing a team task.
     Ensures the user has the proper permissions to edit the task.
@@ -75,29 +69,11 @@ class TeamTaskEditView(LoginRequiredMixin, ObjectCreatorMixin, TeamTaskFormMixin
         # If none of the above, raise a PermissionError
         raise PermissionError('You do not have permission to edit this task.')
 
-    def get_success_url(self):
-        return reverse_lazy(
-            'team-details',
-            kwargs={
-                'username': self.kwargs['username'],
-                'slug': self.kwargs['slug'],
-            }
-        )
 
-
-class TeamTaskDeleteView(LoginRequiredMixin, ObjectCreatorMixin, DeleteView):
+class TeamTaskDeleteView(LoginRequiredMixin, ObjectCreatorMixin, TeamTasksSuccessUrlMixin, DeleteView):
     model = TeamTask
     template_name = 'tasks/tasks_team/team-task-delete.html'
     context_object_name = 'task'
-
-    def get_success_url(self):
-        return reverse_lazy(
-            'team-details',
-            kwargs={
-                'username': self.kwargs['username'],
-                'slug': self.kwargs['slug'],
-            }
-        )
 
 
 class TasksForApproveView(LoginRequiredMixin, ListView):
@@ -138,10 +114,11 @@ class TaskRejectApproveView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy(
-            'tasks-for-approve',
+            'team-task-details',
             kwargs={
                 'username': self.kwargs['username'],
                 'slug': self.kwargs['slug'],
+                'pk': self.kwargs['pk'],
             }
         )
 
@@ -164,6 +141,13 @@ class TeamTaskDetailsView(LoginRequiredMixin, DetailView):
 
         task = super().get_object(queryset)
         team = get_object_or_404(Team, slug=self.kwargs['slug'])
+
+        failed_tasks = TeamTask.objects.filter(
+            team=team,
+            is_completed=False,
+            deadline__lte=now()
+        )
+        failed_tasks.update(note='FAILED', is_completed=True)
 
         if task.team != team:
             # If the task does not belong to the team, return None to trigger a 404 error.

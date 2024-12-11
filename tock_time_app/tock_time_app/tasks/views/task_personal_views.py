@@ -2,7 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from tock_time_app.common.mixins import UserTasksMixin, UserTaskAccessMixin, ObjectCreatorMixin
-from tock_time_app.tasks.forms.task_personal_forms import PersonalTaskCreateForm, PersonalTaskEditForm
+from tock_time_app.tasks.forms import PersonalTaskCreateForm, PersonalTaskEditForm
+from tock_time_app.tasks.mixins import PersonalTasksSuccessUrlMixin
 from tock_time_app.tasks.models import PersonalTask
 
 
@@ -17,8 +18,14 @@ class TaskboardView(LoginRequiredMixin, UserTasksMixin, ListView):
     paginate_by = 5
     task_status = False  # Set the task status to incomplete
 
+    def get_queryset(self):
+        # Mark overdue tasks as failed
+        PersonalTask.objects.mark_failed_for_user(self.request.user)
 
-class PersonalTaskCreateView(LoginRequiredMixin, CreateView):
+        return super().get_queryset()
+
+
+class PersonalTaskCreateView(LoginRequiredMixin, PersonalTasksSuccessUrlMixin, CreateView):
     """ Allows a logged-in user to create a new personal task. """
 
     model = PersonalTask
@@ -26,21 +33,15 @@ class PersonalTaskCreateView(LoginRequiredMixin, CreateView):
     template_name = 'tasks/tasks_personal/personal-task-create.html'
 
     def form_valid(self, form):
+        """ Set the current user as the creator of the task. """
+
         task = form.save(commit=False)
         task.created_by = self.request.user
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse_lazy(
-            'personal-taskboard',
-            kwargs={
-                'username': self.kwargs['username'],
-            }
-        )
 
-
-class PersonalTaskEditView(LoginRequiredMixin, UserTaskAccessMixin, UpdateView):
+class PersonalTaskEditView(LoginRequiredMixin, UserTaskAccessMixin, PersonalTasksSuccessUrlMixin, UpdateView):
     """ Allows a logged-in user to edit an existing personal task. """
 
     model = PersonalTask
@@ -48,28 +49,12 @@ class PersonalTaskEditView(LoginRequiredMixin, UserTaskAccessMixin, UpdateView):
     template_name = 'tasks/tasks_personal/personal-task-edit.html'
     context_object_name = 'task'
 
-    def get_success_url(self):
-        return reverse_lazy(
-            'personal-taskboard',
-            kwargs={
-                'username': self.kwargs['username'],
-            }
-        )
 
-
-class PersonalTaskDeleteView(LoginRequiredMixin, UserTaskAccessMixin, DeleteView):
+class PersonalTaskDeleteView(LoginRequiredMixin, UserTaskAccessMixin, PersonalTasksSuccessUrlMixin, DeleteView):
     """ Allows a logged-in user to delete a personal task. """
 
     model = PersonalTask
     template_name = 'tasks/tasks_personal/personal-task-delete.html'
-
-    def get_success_url(self):
-        return reverse_lazy(
-            'personal-taskboard',
-            kwargs={
-                'username': self.kwargs['username'],
-            }
-        )
 
 
 class PersonalTaskDetailsView(LoginRequiredMixin, UserTaskAccessMixin, ObjectCreatorMixin, DetailView):
@@ -88,6 +73,8 @@ class UnarchiveTaskView(LoginRequiredMixin, UserTaskAccessMixin, UpdateView):
     template_name = 'tasks/tasks_personal/archive.html'
 
     def form_valid(self, form):
+        """ Mark the task as incomplete. """
+
         task = form.save(commit=False)
         task.is_completed = False
         task.save()

@@ -15,6 +15,7 @@
         {% else %}
             <p>Assigned to: -----</p>
         {% endif %}
+    
         <p>Created by: {{ task.created_by.username }}</p>
 
         {% if task.description %}
@@ -32,8 +33,9 @@
         {% endif %}
 
         <div class="profile-btns">
+        
             {% if is_creator or user in task.assigned_to.all %}
-                <a class="btn btn-secondary" 
+                <a class="btn btn-secondary"
                    href="{% url 'team-task-edit' user.username task.team.slug task.pk %}">
                     Edit Task
                 </a>
@@ -45,6 +47,7 @@
                     Delete
                 </a>
             {% endif %}
+        
         </div>
     </div>
 {% endblock %}

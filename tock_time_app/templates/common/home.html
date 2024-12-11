@@ -3,6 +3,7 @@
 
 {% block content %}
     <div class="container-fluid d-flex flex-column m-auto gap-3 text-center">
+    
         {% if request.user.is_authenticated %}
             <h3>Welcome, <i>{{ request.user.username }}</i> !</h3>
             <div class="form form-view d-flex">
@@ -33,6 +34,7 @@
                     </div>
                 </div>
             </div>
+            
         {% else %}
             <div>
                 <h1 class="mt-5">Welcome to TockTime !</h1>
@@ -43,6 +45,8 @@
                     {% include 'common/nav-home-page.html' %}
                 </div>
             </div>
+            
         {% endif %}
+    
     </div>
 {% endblock %}

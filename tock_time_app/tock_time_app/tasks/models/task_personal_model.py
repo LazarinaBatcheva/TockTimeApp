@@ -25,4 +25,4 @@ class PersonalTask(TaskBaseModel):
         related_name='created_personal_tasks',
     )
 
-    objects = PersonalTaskManager() # Custom manager for additional query functionality.
+    objects = PersonalTaskManager()  # Custom manager for additional query functionality.

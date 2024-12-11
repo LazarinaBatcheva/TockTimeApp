@@ -23,9 +23,7 @@ class AppUserRegisterView(CreateView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        """
-        Overrides the form_valid method to log in the user after successful registration.
-        """
+        """ Logs in the user after successful registration. """
 
         response = super().form_valid(form)
 
@@ -41,20 +39,29 @@ class AppUserLogInView(LoginView):
 
 
 class AppUserLogOutView(LogoutView):
-    """ Handles user logout. """
+    """
+    Handles user logout.
+    This view inherits from Django's LogoutView and adds no additional functionality.
+    """
 
     pass
 
 
 class SearchUserView(ListView):
+    """ Provides functionality to search for users based on their username, first name, or last name. """
+
     model = UserModel
     template_name = 'accounts/search_user.html'
     context_object_name = 'users'
+    paginate_by = 6
 
     def get_queryset(self):
+        """ Filters users based on the search query. """
+
         search_query = self.request.GET.get('search', '')
 
         if search_query:
+
             return UserModel.objects.filter(
                 Q(username__icontains=search_query) |
                 Q(profile__first_name__icontains=search_query) |

@@ -3,8 +3,9 @@
 {% block content %}
     <div class="container-fluid d-flex flex-column mt-5 gap-3 text-center">
         <h3>Archive</h3>
+    
         {% if object_list %}
-            <div class="form task table-responsive m-auto bg-shadow-custom" style="width: 50%">
+            <div class="form task table-responsive m-auto bg-shadow-custom" style="width: 65%">
                 <p class="pb-4">Here are all the tasks that you have completed:</p>
                 <table class="container-fluid">
                     <thead>
@@ -12,16 +13,20 @@
                         <th><p class="mb-0 me-3">Title</p></th>
                         <th><p class="mb-0">Due Date</p></th>
                         <th><p class="mb-0">Due Time</p></th>
+                        <th><p class="mb-0">Note</p></th>
                     </tr>
                     </thead>
                     <tbody>
+                    
                     {% for task in object_list %}
                         <tr class="tasks-list">
                             <td><p class="me-3">{{ task.title|truncatechars:15 }}</p></td>
                             <td><p>{{ task.deadline.date }}</p></td>
                             <td><p>{{ task.deadline.time }}</p></td>
+                            <td><p>{{ task.note }}</p></td>
                             <td>
                             <div class="d-flex">
+                                
                                 <form method="post" class="form"
                                       action="{% url 'personal-task-unarchive' request.user.username task.pk %}">
 
@@ -40,12 +45,17 @@
                             </div>
                             </td>
                         </tr>
+                        
                     {% endfor %}
+                    
                     </tbody>
                 </table>
             </div>
+            
         {% else %}
             <h6 class="mt-5">You have no archived tasks yet!</h6>
+            
         {% endif %}
+    
     </div>
 {% endblock %}

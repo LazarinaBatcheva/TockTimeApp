@@ -7,11 +7,11 @@
         {% csrf_token %}
 
         {% if is_creator %}
-            <h4 class="mb-4">Edit {{ task.title }}:</h4>
+            <h4 class="mb-4">Edit task "{{ task.title }}":</h4>
             {{ form.as_p }}
             
         {% else %}
-            <h4 class="mb-5">Did you complete the task '{{ task.title }}'?</h4>
+            <h4 class="mb-5">Did you complete the task "{{ task.title }}"?</h4>
             <label for="id_note">Note:</label>
             {{ form.note }}
             <br>

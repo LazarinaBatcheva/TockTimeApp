@@ -5,7 +5,7 @@ from tock_time_app.accounts.models import Profile
 
 class PermissionRequiredMixin:
     """
-    General mixin to handle permission checks in `dispatch`.
+    General mixin to handle permission checks in 'dispatch'.
     Other mixins can inherit this to reuse the logic.
     """
 
@@ -14,7 +14,7 @@ class PermissionRequiredMixin:
         Override this method in child mixins or views to implement custom permission logic.
         Must return True or False.
         """
-        raise NotImplementedError("Subclasses must implement `test_func`.")
+        raise NotImplementedError("Subclasses must implement 'test_func'.")
 
     def dispatch(self, request, *args, **kwargs):
         if not self.test_func():

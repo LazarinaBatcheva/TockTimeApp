@@ -39,18 +39,23 @@
                             </a>
 
                             <form method="post" action="{% url 'logout' %}" id="btn-logout-user">
+                                
                                 {% csrf_token %}
+                                
                                 <button class="btn btn-secondary ms-2" type="submit"
                                         style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;
                         --bs-btn-font-size: .75rem;">
                                     Logout
                                 </button>
                             </form>
+                            
                         </div>
                     </div>
+                    
                 {% else %}
                     <a class="nav-link active" href="{% url 'register' %}">Register</a>
                     <a class="nav-link active" href="{% url 'login' %}">LogIn</a>
+                    
                 {% endif %}
 
             </div>
@@ -61,5 +66,6 @@
                    class="form-control me-2">
             <button type="submit" class="btn btn-primary mt-0">Search</button>
         </form>
+    
     </div>
 </nav>
