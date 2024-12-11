@@ -21,7 +21,10 @@ python -m venv venv
 source venv/bin/activate  # For Windows: venv\Scripts\activate
 
 3. Install the dependencies:
+\`\`\`bash
+# Команди за терминал
 pip install -r requirements.txt
+\`\`\`
 
 4. Configure the .env file with the required settings:
 DEBUG=True
