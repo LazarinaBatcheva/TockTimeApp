@@ -46,12 +46,6 @@
     text-align: center;
 }
 
-p label::before {
-    content: "*";
-    color: red;
-    margin-right: 3px;
-}
-
 .form-view {
     align-items: center;
 }
@@ -63,8 +57,10 @@ p label::before {
     background-color: #fff6eb;
 }
 
-.required-indicator {
+.required-label::before {
+    content: "*";
     color: red;
+    margin-right: 3px;
 }
 
 /* task edit form */

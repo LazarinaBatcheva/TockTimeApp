@@ -134,7 +134,7 @@ async function updateFriendRequest(requestId, status) {
 
         if (response.ok) {
             alert(`Friend request ${status} successfully!`);
-            listFriendRequests();
+            await listFriendRequests();
         } else {
             const errorData = await response.json();
             alert(`Error: ${errorData.detail}`);
