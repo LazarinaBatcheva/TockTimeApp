@@ -137,6 +137,9 @@ The application uses JavaScript for dynamic interactions, including:
 
 ## Project Structure
 
+## Project Structure
+
+```plaintext
 tock_time_app/
 ├── static/              # CSS, JavaScript, and other static assets
 ├── staticfiles/         # Collected static files for deployment
@@ -155,7 +158,6 @@ tock_time_app/
 ├── manage.py            # Django management script
 ├── requirements.txt     # Project dependencies
 └── ...                  # Additional files and folders
-
 
 ---
 
