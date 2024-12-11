@@ -146,7 +146,7 @@ tock_time_app/
 ├── templates/           # HTML templates for the app
 ├── tock_time_app/
 │   ├── accounts/        # User authentication and profiles
-│   ├── common/          # Shared utilities and base templates
+│   ├── common/          # Shared utilities
 │   ├── friends/         # Friend request and management features
 │   ├── tasks/           # Personal and team tasks management
 │   ├── teams/           # Team creation and management
