@@ -159,8 +159,7 @@ tock_time_app/
 ├── requirements.txt     # Project dependencies
 └── ...                  # Additional files and folders
 
----
-
+```
 ## Contribution
 
 Contributions are welcome! To contribute:
