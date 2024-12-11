@@ -158,8 +158,10 @@ tock_time_app/
 ├── manage.py            # Django management script
 ├── requirements.txt     # Project dependencies
 └── ...                  # Additional files and folders
-
 ```
+
+---
+
 ## Contribution
 
 Contributions are welcome! To contribute:
@@ -181,18 +183,6 @@ Contributions are welcome! To contribute:
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
-## Screenshots
-
-### **Dashboard**
-
-
-
-### **Friend Requests**
-
-
 
 ---
 
