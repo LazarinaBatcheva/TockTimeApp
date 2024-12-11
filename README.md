@@ -84,6 +84,7 @@ TockTimeApp is a Django-based web application designed to manage personal and te
    DEBUG=True
    SECRET_KEY=your-secret-key
    DATABASE_URL=postgres://username:password@localhost:5432/tocktime
+   CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
    ```
 
 5. Apply migrations:
